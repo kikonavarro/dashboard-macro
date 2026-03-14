@@ -32,10 +32,43 @@
   #apikey-save { font-size: 11px; padding: 7px 14px; border-radius: 8px; background: transparent; border: 0.5px solid rgba(255,255,255,0.2); color: #e8e8e8; white-space: nowrap; }
   #apikey-save:hover { background: rgba(255,255,255,0.05); }
   #apikey-status { font-size: 10px; font-family: monospace; margin-top: 6px; }
+
+  /* Tabs */
+  .tab-bar { display: flex; gap: 0; margin-bottom: 14px; border-bottom: 0.5px solid rgba(255,255,255,0.1); }
+  .tab-btn { font-size: 12px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.07em; padding: 8px 18px; background: transparent; border: none; color: #666; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .tab-btn:hover { color: #aaa; }
+  .tab-btn.active { color: #e8e8e8; border-bottom-color: #8bc34a; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Guide styles */
+  .guide-section { margin-bottom: 20px; }
+  .guide-card { background: #1a1a1a; border: 0.5px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 10px; }
+  .guide-card h3 { font-size: 14px; font-weight: 600; color: #e8e8e8; margin: 0 0 4px; }
+  .guide-card .guide-cat { font-size: 10px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin: 0 0 12px; }
+  .guide-card p { font-size: 13px; color: #bbb; line-height: 1.6; margin: 0 0 10px; }
+  .guide-card p:last-child { margin-bottom: 0; }
+  .guide-label { font-size: 11px; font-family: monospace; color: #8bc34a; text-transform: uppercase; letter-spacing: 0.05em; margin: 12px 0 4px; }
+  .guide-thresholds { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 10px; }
+  .guide-th { font-size: 11px; font-family: monospace; padding: 3px 10px; border-radius: 6px; border: 0.5px solid rgba(255,255,255,0.1); }
+  .guide-source { font-size: 11px; color: #666; font-family: monospace; margin-top: 8px; padding-top: 8px; border-top: 0.5px solid rgba(255,255,255,0.06); }
+  .guide-intro { background: #161616; border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 16px; }
+  .guide-intro p { font-size: 13px; color: #999; line-height: 1.7; margin: 0 0 10px; }
+  .guide-intro p:last-child { margin-bottom: 0; }
+  .guide-formula { background: #111; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px; font-family: monospace; font-size: 12px; color: #ccc; margin: 10px 0; line-height: 1.6; }
 </style>
 </head>
 <body>
 <div style="max-width:960px;margin:0 auto;padding:0.5rem 0">
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
+    <button class="tab-btn" onclick="switchTab('guide')">Guía de indicadores</button>
+  </div>
+
+  <!-- TAB: Dashboard -->
+  <div id="tab-dashboard" class="tab-panel active">
 
   <!-- API Key banner -->
   <div id="apikey-banner">
@@ -80,9 +113,199 @@
   <div id="verdict" class="mc" style="margin-bottom:6px"></div>
   <div id="data-source" style="display:none;font-size:10px;color:#666;font-family:monospace;margin-top:6px"></div>
 
+  </div><!-- end tab-dashboard -->
+
+  <!-- TAB: Guía -->
+  <div id="tab-guide" class="tab-panel">
+
+    <div class="guide-intro">
+      <p style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;color:#8bc34a;margin-bottom:8px">Cómo funciona este dashboard</p>
+      <p>Este dashboard monitoriza <strong style="color:#e8e8e8">10 indicadores macro</strong> que históricamente han anticipado recesiones o crisis financieras. Cada indicador se evalúa en una escala de <strong style="color:#8bc34a">0</strong> (verde, sin riesgo) a <strong style="color:#e57373">3</strong> (rojo, máximo riesgo) según umbrales predefinidos.</p>
+      <p>La <strong style="color:#e8e8e8">evaluación global</strong> es la media aritmética de todos los niveles individuales:</p>
+      <div class="guide-formula">
+        Riesgo global = Σ señales / 10 indicadores<br>
+        <span style="color:#8bc34a">< 0.35 → Riesgo bajo</span> · <span style="color:#f5a623">< 0.9 → Moderado</span> · <span style="color:#D85A30">< 1.7 → Elevado</span> · <span style="color:#e57373">≥ 1.7 → Recesión</span>
+      </div>
+      <p>Los datos se obtienen en tiempo real mediante la API de Anthropic con búsqueda web. Cada actualización busca los valores más recientes en fuentes financieras públicas (Bloomberg, Reuters, FRED, Yahoo Finance, etc.).</p>
+    </div>
+
+    <!-- Oil -->
+    <div class="guide-card">
+      <p class="guide-cat">Shock energético</p>
+      <h3>Petróleo Brent</h3>
+      <p>Precio del barril de crudo Brent, la referencia internacional del petróleo. Las subidas bruscas del petróleo actúan como un <strong style="color:#e8e8e8">impuesto regresivo</strong> sobre la economía: encarecen la producción, el transporte y los bienes de consumo, erosionando márgenes empresariales y poder adquisitivo.</p>
+      <p>Históricamente, cada recesión de EE.UU. desde los años 70 ha venido precedida de un spike del petróleo. Por encima de $110/barril, el efecto contractivo sobre el PIB global se vuelve significativo.</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">< $90 — normal</span>
+        <span class="guide-th" style="color:#f5a623">$90–110 — presión inflacionaria</span>
+        <span class="guide-th" style="color:#D85A30">$110–130 — riesgo desaceleración</span>
+        <span class="guide-th" style="color:#e57373">≥ $130 — recesión inminente</span>
+      </div>
+      <p class="guide-source">Fuente: ICE Futures Europe · dato diario</p>
+    </div>
+
+    <!-- VIX -->
+    <div class="guide-card">
+      <p class="guide-cat">Volatilidad de renta variable</p>
+      <h3>VIX (CBOE Volatility Index)</h3>
+      <p>El VIX mide la <strong style="color:#e8e8e8">volatilidad implícita esperada a 30 días</strong> del S&P 500, calculada a partir de los precios de opciones. Se le conoce como el "índice del miedo" porque refleja cuánto están dispuestos a pagar los inversores por protección.</p>
+      <p>Un VIX bajo (<18) indica complacencia o confianza. Lecturas por encima de 25 señalan tensión significativa, y spikes por encima de 35 se asocian a eventos de estrés sistémico (crisis financiera 2008: VIX tocó 80; COVID 2020: tocó 82).</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">< 18 — mercado tranquilo</span>
+        <span class="guide-th" style="color:#f5a623">18–25 — tensión</span>
+        <span class="guide-th" style="color:#D85A30">25–35 — estrés financiero</span>
+        <span class="guide-th" style="color:#e57373">≥ 35 — pánico</span>
+      </div>
+      <p class="guide-source">Fuente: CBOE (Chicago Board Options Exchange) · dato en tiempo real</p>
+    </div>
+
+    <!-- MOVE -->
+    <div class="guide-card">
+      <p class="guide-cat">Volatilidad de bonos</p>
+      <h3>MOVE Index (Merrill Lynch Option Volatility Estimate)</h3>
+      <p>El equivalente del VIX para el mercado de bonos del Tesoro de EE.UU. Mide la <strong style="color:#e8e8e8">volatilidad implícita de los tipos de interés</strong> a través de opciones sobre Treasuries a distintos plazos (2Y, 5Y, 10Y, 30Y).</p>
+      <p>El MOVE es especialmente relevante porque el mercado de bonos soberanos es la base del sistema financiero global. Cuando este mercado se vuelve volátil, afecta al coste de financiación de gobiernos, empresas y familias. Un MOVE por encima de 150 ha precedido históricamente a episodios de estrés serio (crisis de SVB 2023: MOVE tocó 198).</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">< 100 — bonos estables</span>
+        <span class="guide-th" style="color:#f5a623">100–150 — tensión en tipos</span>
+        <span class="guide-th" style="color:#D85A30">150–200 — estrés severo</span>
+        <span class="guide-th" style="color:#e57373">≥ 200 — pánico de tipos</span>
+      </div>
+      <p class="guide-source">Fuente: ICE BofA · dato diario</p>
+    </div>
+
+    <!-- Yield Curve -->
+    <div class="guide-card">
+      <p class="guide-cat">Tipos de interés (US)</p>
+      <h3>Curva de tipos 10Y – 2Y</h3>
+      <p>El diferencial entre el rendimiento del bono del Tesoro a 10 años y el de 2 años. En condiciones normales, los bonos a largo plazo pagan más que los de corto plazo (curva positiva). Cuando se <strong style="color:#e8e8e8">invierte</strong> (el 2Y paga más que el 10Y), el mercado está señalando que espera una recesión.</p>
+      <p>Este es probablemente el indicador macro con mejor historial predictivo: <strong style="color:#e8e8e8">cada recesión de EE.UU. desde 1955</strong> ha venido precedida de una inversión de la curva, con un adelanto de 6–18 meses. Solo ha dado una falsa señal (1966).</p>
+      <p style="color:#f5a623;font-size:12px">⚠ Indicador invertido: valores más negativos = mayor riesgo</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">≥ 0% — expansión normal</span>
+        <span class="guide-th" style="color:#f5a623">0% a -0.5% — alerta de inversión</span>
+        <span class="guide-th" style="color:#D85A30">< -0.5% — recesión probable</span>
+      </div>
+      <p class="guide-source">Fuente: FRED (Federal Reserve Economic Data) · dato diario</p>
+    </div>
+
+    <!-- Inflation 5y5y -->
+    <div class="guide-card">
+      <p class="guide-cat">Expectativas de inflación</p>
+      <h3>Inflación 5y5y Forward</h3>
+      <p>El <strong style="color:#e8e8e8">5-Year, 5-Year Forward Inflation Expectation Rate</strong> mide lo que el mercado espera que sea la inflación media durante los 5 años que empiezan dentro de 5 años. Es la métrica preferida de la Fed para evaluar si las expectativas de inflación a largo plazo están "ancladas".</p>
+      <p>Cuando este indicador sube por encima de 2.3%, sugiere que el mercado duda de que los bancos centrales consigan controlar la inflación. Lecturas persistentes por encima de 2.7% señalan riesgo de estanflación (inflación alta + crecimiento bajo), el peor escenario para los activos de riesgo.</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">< 2.3% — estable</span>
+        <span class="guide-th" style="color:#f5a623">2.3–2.7% — presión inflacionaria</span>
+        <span class="guide-th" style="color:#D85A30">≥ 2.7% — riesgo estanflación</span>
+      </div>
+      <p class="guide-source">Fuente: FRED / Bloomberg · dato diario</p>
+    </div>
+
+    <!-- Baltic Dirty Tanker -->
+    <div class="guide-card">
+      <p class="guide-cat">Comercio de petróleo</p>
+      <h3>Baltic Dirty Tanker Index (variación)</h3>
+      <p>Índice de costes de flete de petroleros que transportan crudo ("dirty" = sin refinar). Mide la <strong style="color:#e8e8e8">variación porcentual reciente</strong> del coste de alquilar un barco para transportar petróleo a nivel global.</p>
+      <p>Subidas bruscas del Baltic Dirty Tanker señalan disrupciones en las rutas comerciales de petróleo, ya sea por sanciones, conflictos geopolíticos (guerras, bloqueos de estrechos), o cuellos de botella logísticos. Funciona como un <strong style="color:#e8e8e8">indicador adelantado</strong> de shocks de oferta energética, ya que los precios del flete se mueven antes que el precio del crudo en sí.</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">< +20% — comercio fluido</span>
+        <span class="guide-th" style="color:#f5a623">+20–50% — tensión en rutas</span>
+        <span class="guide-th" style="color:#D85A30">≥ +50% — disrupción seria</span>
+      </div>
+      <p class="guide-source">Fuente: Baltic Exchange · dato diario</p>
+    </div>
+
+    <!-- HY Spreads -->
+    <div class="guide-card">
+      <p class="guide-cat">Crédito / estrés financiero</p>
+      <h3>High Yield Credit Spreads</h3>
+      <p>El diferencial de crédito (spread) entre bonos corporativos de alto rendimiento (high yield / "bonos basura") y los Treasuries. Mide la <strong style="color:#e8e8e8">prima de riesgo de crédito</strong> que exigen los inversores para prestar a empresas con peor calificación crediticia.</p>
+      <p>Cuando los spreads se amplían, significa que los inversores perciben mayor riesgo de impagos. Es uno de los mejores indicadores de estrés financiero porque el mercado de crédito es donde las empresas se financian día a día. Ampliaciones por encima de 500 bps se asocian históricamente con recesiones o crisis financieras (2008: spreads tocaron 2000 bps; COVID: tocaron 1100 bps).</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">< 350 bps — normal</span>
+        <span class="guide-th" style="color:#f5a623">350–500 bps — tensión crediticia</span>
+        <span class="guide-th" style="color:#D85A30">≥ 500 bps — riesgo de crisis</span>
+      </div>
+      <p class="guide-source">Fuente: ICE BofA HY Index (OAS) / FRED · dato diario</p>
+    </div>
+
+    <!-- XCCY Basis -->
+    <div class="guide-card">
+      <p class="guide-cat">Estrés de liquidez en dólares</p>
+      <h3>EUR/USD Cross-Currency Basis Swap</h3>
+      <p>El cross-currency basis mide el <strong style="color:#e8e8e8">coste adicional</strong> que pagan las entidades no estadounidenses para obtener financiación en dólares a través del mercado de swaps de divisas. En condiciones normales debería ser cercano a cero, pero se vuelve negativo cuando hay escasez de dólares a nivel global.</p>
+      <p>Dado que el dólar es la moneda de reserva mundial y la divisa dominante en el comercio y la deuda global, una escasez de dólares afecta a todo el sistema financiero. Un basis muy negativo señala que los bancos no estadounidenses están desesperados por acceder a dólares, lo cual es un indicador potente de <strong style="color:#e8e8e8">estrés sistémico de liquidez</strong> (2008: basis tocó -150 bps; COVID: tocó -85 bps).</p>
+      <p style="color:#f5a623;font-size:12px">⚠ Indicador invertido: valores más negativos = mayor riesgo</p>
+      <p class="guide-label">Umbrales</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">≥ -10 bps — liquidez normal</span>
+        <span class="guide-th" style="color:#f5a623">-10 a -25 bps — tensión en dólares</span>
+        <span class="guide-th" style="color:#D85A30">-25 a -50 bps — estrés severo</span>
+        <span class="guide-th" style="color:#e57373">< -50 bps — crisis de liquidez</span>
+      </div>
+      <p class="guide-source">Fuente: Bloomberg / Reuters · dato diario</p>
+    </div>
+
+    <!-- FCI -->
+    <div class="guide-card">
+      <p class="guide-cat">Condiciones de financiación</p>
+      <h3>Financial Conditions Index (FCI)</h3>
+      <p>Índice compuesto que agrega múltiples variables financieras — tipos de interés, spreads de crédito, precios de acciones, tipo de cambio del dólar — en una única medida de lo <strong style="color:#e8e8e8">fácil o difícil que es acceder a financiación</strong> en la economía.</p>
+      <p>Los principales FCI son los publicados por Goldman Sachs y la Fed de Chicago (NFCI). Condiciones laxas estimulan el crecimiento pero pueden generar burbujas; condiciones restrictivas frenan la economía y, si se mantienen, precipitan recesiones. Es un indicador cualitativo en el dashboard porque los distintos FCI usan escalas diferentes.</p>
+      <p class="guide-label">Niveles</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">Laxo — favorable al crecimiento</span>
+        <span class="guide-th" style="color:#f5a623">Neutro — condiciones estables</span>
+        <span class="guide-th" style="color:#e57373">Restrictivo — riesgo de recesión</span>
+      </div>
+      <p class="guide-source">Fuente: Goldman Sachs FCI / Chicago Fed NFCI · dato semanal</p>
+    </div>
+
+    <!-- Global Liquidity -->
+    <div class="guide-card">
+      <p class="guide-cat">Fed · ECB · PBOC · BOJ</p>
+      <h3>Liquidez global (balance de bancos centrales)</h3>
+      <p>Mide la <strong style="color:#e8e8e8">dirección agregada</strong> de los balances de los cuatro bancos centrales más importantes: Fed (EE.UU.), BCE (eurozona), PBOC (China) y BOJ (Japón). Cuando los bancos centrales expanden sus balances (QE), inyectan liquidez en el sistema; cuando los contraen (QT), la retiran.</p>
+      <p>La liquidez global es el factor macro más determinante para los precios de los activos financieros. Periodos de contracción sincronizada de los cuatro bancos centrales son extremadamente raros y se asocian a correcciones severas en todos los mercados. Es cualitativo porque requiere evaluar la tendencia de cada banco central individualmente.</p>
+      <p class="guide-label">Niveles</p>
+      <div class="guide-thresholds">
+        <span class="guide-th" style="color:#8bc34a">Creciendo — expansiva</span>
+        <span class="guide-th" style="color:#f5a623">Estable — neutral</span>
+        <span class="guide-th" style="color:#e57373">Cayendo — contractiva</span>
+      </div>
+      <p class="guide-source">Fuente: Fed H.4.1 / BCE balance sheet / PBOC / BOJ · dato semanal/mensual</p>
+    </div>
+
+    <!-- How signals work -->
+    <div class="guide-intro" style="margin-top:20px">
+      <p style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;color:#8bc34a;margin-bottom:8px">Lógica de señales y tendencias</p>
+      <p><strong style="color:#e8e8e8">Señales:</strong> Cada indicador se compara contra sus umbrales. Para indicadores normales (valor alto = peor), se evalúa si el valor supera cada umbral sucesivamente. Para indicadores invertidos (curva de tipos, cross-currency basis), la lógica se invierte: valores más bajos = mayor riesgo.</p>
+      <p><strong style="color:#e8e8e8">Flechas de tendencia:</strong> Comparan el valor actual con el de la semana anterior. La flecha <span class="trend-up">↑</span> indica subida y <span class="trend-dn">↓</span> bajada. El color de la flecha depende de si el movimiento es positivo o negativo para el riesgo — para indicadores invertidos, una bajada es mala (rojo) aunque sea ↓.</p>
+      <p><strong style="color:#e8e8e8">Badge LIVE:</strong> Aparece cuando los datos provienen de una búsqueda en tiempo real, no de valores manuales del slider.</p>
+      <p><strong style="color:#e8e8e8">Datos:</strong> Los valores se obtienen llamando a la API de Anthropic (Claude) con herramienta de búsqueda web. Claude busca el dato más reciente en fuentes financieras públicas y devuelve un JSON estructurado. Cada actualización cuesta ~$0.01 y los datos pueden tener un retraso de minutos a horas según el indicador.</p>
+    </div>
+
+  </div><!-- end tab-guide -->
+
 </div>
 
 <script>
+function switchTab(tab){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+}
+
 const ZC=['#639922','#BA7517','#D85A30','#A32D2D'];
 const TC=['#8bc34a','#f5a623','#D85A30','#e57373'];
 const LS_KEY='macro_dash_apikey';
