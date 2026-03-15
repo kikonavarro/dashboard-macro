@@ -1,22 +1,24 @@
 {
   "brent": 103.14,
-  "vix": 27.19,
+  "vix": 27.29,
   "move": 91.17,
-  "yield_curve": -0.51,
-  "inflation_5y5y": 2.19,
-  "tanker_chg": 0,
+  "yield_curve": 0.53,
+  "inflation_5y5y": 2.30,
   "hy_spreads": 309,
-  "xccy_basis": -25,
-  "fci": 1,
+  "bdti": 2835,
+  "xccy_basis": -10,
+  "nfci": -0.51,
   "global_liquidity": 1,
   "trends": {
     "brent": "up",
     "vix": "up",
     "move": "down",
-    "yield_curve": "up",
+    "yield_curve": "flat",
     "hy_spreads": "up",
-    "xccy_basis": "down"
+    "xccy_basis": "flat",
+    "bdti": "up",
+    "nfci": "flat"
   },
-  "timestamp": "2026-03-14T22:55:23.266Z",
-  "sources": "CNBC, Investing.com, Yahoo Finance, TradingView, FRED St Louis Fed, Trading Economics, CME Group, Chicago Fed"
+  "timestamp": "2026-03-15T12:00:00.000Z",
+  "sources": "FRED, CNBC, Investing.com, Chicago Fed, Baltic Exchange, Trading Economics"
 }
