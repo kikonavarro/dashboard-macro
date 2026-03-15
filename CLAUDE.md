@@ -2,7 +2,7 @@
 
 ## Descripción del proyecto
 
-Dashboard interactivo de riesgo de recesión global que combina 10 indicadores macro con datos en tiempo real obtenidos via Anthropic API + web search. Diseñado con estética dark, orientado a value investing y análisis macro estilo hedge fund.
+Dashboard interactivo de riesgo de recesión global que combina 10 indicadores macro. Los datos se actualizan manualmente via `data.json` (commit + push) o, opcionalmente, en tiempo real via Anthropic API + web search. Diseñado con estética dark, orientado a value investing y análisis macro estilo hedge fund. Disponible en español e inglés.
 
 El proyecto vive en: `https://github.com/kikonavarro/macro-dashboard`
 URL pública (GitHub Pages): `https://kikonavarro.github.io/macro-dashboard/`
@@ -11,12 +11,56 @@ URL pública (GitHub Pages): `https://kikonavarro.github.io/macro-dashboard/`
 
 ## Arquitectura
 
-Un único archivo `index.html` standalone. Sin dependencias externas, sin build step, sin framework. Todo el JS está inline.
+Un único archivo `index.html` standalone + un `data.json` con los datos precargados. Sin dependencias externas, sin build step, sin framework. Todo el JS está inline.
 
 ```
 macro-dashboard/
 ├── index.html        ← dashboard completo (HTML + CSS + JS)
+├── data.json         ← datos de mercado precargados
 └── README.md
+```
+
+---
+
+## Sistema de datos
+
+### Flujo principal: data.json (sin coste)
+
+Los datos se actualizan manualmente editando `data.json` y haciendo commit + push. GitHub Pages sirve el archivo y el dashboard lo carga automáticamente al abrir la página. Este es el flujo recomendado — Claude Code puede buscar los datos y actualizar el JSON.
+
+### Flujo opcional: Anthropic API (con coste ~$0.10/actualización)
+
+Si el usuario introduce una API key de Anthropic, puede pulsar "Actualizar" para obtener datos en tiempo real. El dashboard llama a `https://api.anthropic.com/v1/messages` con modelo `claude-sonnet-4-20250514` y tool `web_search_20250305`. La API key se guarda en `localStorage` (clave: `macro_dash_apikey`).
+
+Para visitantes sin API key y con `data.json` disponible, el banner de API key se colapsa y muestra un link sutil para configurarla.
+
+### Estructura del JSON (data.json y respuesta API)
+
+```json
+{
+  "brent": 103,
+  "vix": 25,
+  "move": 91,
+  "yield_curve": 0.56,
+  "inflation_5y5y": 2.19,
+  "hy_spreads": 309,
+  "bdti": 2835,
+  "xccy_basis": -12,
+  "nfci": -0.51,
+  "global_liquidity": 1,
+  "trends": {
+    "brent": "up",
+    "vix": "up",
+    "move": "down",
+    "yield_curve": "up",
+    "hy_spreads": "up",
+    "xccy_basis": "flat",
+    "bdti": "up",
+    "nfci": "flat"
+  },
+  "timestamp": "2026-03-15T12:00:00.000Z",
+  "sources": "Bloomberg, Reuters, FRED, Chicago Fed"
+}
 ```
 
 ---
@@ -61,85 +105,32 @@ return th.length;
 
 La evaluación global es la media aritmética de todos los niveles:
 - `< 0.35` → 🟢 Riesgo bajo
-- `< 0.9` → 🟡 Riesgo moderado  
+- `< 0.9` → 🟡 Riesgo moderado
 - `< 1.7` → 🟠 Riesgo elevado
 - `≥ 1.7` → 🔴 Riesgo de recesión
 
 ---
 
-## Sistema de datos en tiempo real
+## Internacionalización (i18n)
 
-### Cómo funciona
+El dashboard soporta español e inglés. El idioma por defecto es **inglés**. El usuario puede cambiar con el botón ES/EN en la barra de pestañas. La preferencia se guarda en `localStorage` (clave: `macro_dash_lang`).
 
-Al cargar la página, el dashboard llama a `https://api.anthropic.com/v1/messages` con:
-- Modelo: `claude-sonnet-4-20250514`
-- Tool: `web_search_20250305`
-- La API key se lee de `localStorage` (clave: `macro_dash_apikey`)
-
-El prompt pide un JSON estructurado con todos los valores y las tendencias semanales.
-
-### Headers requeridos para llamada desde browser
-
-```javascript
-headers: {
-  'Content-Type': 'application/json',
-  'x-api-key': apiKey,
-  'anthropic-version': '2023-06-01',
-  'anthropic-dangerous-direct-browser-access': 'true'  // ← CRÍTICO para CORS
-}
-```
-
-### Estructura del JSON esperado
-
-```json
-{
-  "brent": 103,
-  "vix": 25,
-  "move": 91,
-  "yield_curve": 0.56,
-  "inflation_5y5y": 2.19,
-  "hy_spreads": 309,
-  "bdti": 2835,
-  "xccy_basis": -12,
-  "nfci": -0.51,
-  "global_liquidity": 1,
-  "trends": {
-    "brent": "up",
-    "vix": "up",
-    "move": "down",
-    "yield_curve": "up",
-    "hy_spreads": "up",
-    "xccy_basis": "flat",
-    "bdti": "up",
-    "nfci": "flat"
-  },
-  "timestamp": "15 mar 2026",
-  "sources": "Bloomberg, Reuters, FRED, Chicago Fed"
-}
-```
-
-### Parsing defensivo
-
-```javascript
-try { parsed = JSON.parse(clean); }
-catch(e) {
-  const m = clean.match(/\{[\s\S]*\}/);
-  if (m) parsed = JSON.parse(m[0]);
-  else throw new Error('JSON inválido');
-}
-```
+Toda la traducción está en el objeto `UI` del script con claves `es` y `en`. Para añadir traducciones de un indicador nuevo, hay que actualizar `UI.es.ind`, `UI.en.ind` (y `UI.*.qual` si es cualitativo).
 
 ---
 
 ## Features de UX
 
-- **Auto-fetch al cargar** + **botón ↻ Actualizar** manual
+- **Datos precargados** via `data.json` + opción de **API key** para datos en tiempo real
+- **Banner colapsable** de API key — oculto para visitantes, expandible con un link
 - **Badge LIVE** en cada card cuando el dato viene de búsqueda real
 - **Flechas de tendencia** ↑↓→ vs semana anterior (verde si mejora, rojo si empeora — con lógica invertida para indicadores donde menos = peor)
 - **Contador de señales** en el header: `X / 10 señales en alerta`
 - **Botón ⎘ Copiar resumen** — genera texto con emojis semáforo para compartir
-- **Campo de API key** con guardado en `localStorage`, validación del prefijo `sk-ant-`
 - **Sliders manuales** como fallback si la API falla
+- **Pestaña Guía** — explicación detallada de cada indicador, umbrales y fuentes
+- **Toggle ES/EN** — interfaz bilingüe con preferencia persistente
+- **Exportar data.json** — descarga los datos actuales para compartir
 
 ---
 
@@ -158,7 +149,17 @@ const ZC = ['#639922', '#BA7517', '#D85A30', '#A32D2D'];  // verde→rojo fill
 const TC = ['#8bc34a', '#f5a623', '#D85A30', '#e57373'];  // verde→rojo text
 ```
 
-El indicador `verdict` del pie usa `border-left: 3px solid {color}` para mostrar el nivel global.
+---
+
+## Cómo actualizar datos
+
+### Opción 1: Pedir a Claude Code (recomendado)
+
+Pedir a Claude Code que busque los valores actuales de los 10 indicadores, actualice `data.json`, y haga commit + push. Coste cero.
+
+### Opción 2: API key de Anthropic
+
+Introducir una API key en el dashboard y pulsar "Actualizar". Coste ~$0.10 por actualización.
 
 ---
 
@@ -182,29 +183,31 @@ Los umbrales están en el array `INDS` al inicio del script. Para modificar un i
 ## Cómo añadir un nuevo indicador
 
 1. Añadir objeto al array `INDS` con todos los campos
-2. Añadir la clave al prompt de búsqueda (string `prompt` en `fetchData()`)
-3. Añadir la key al JSON esperado del prompt
-4. Si es cualitativo (botones en vez de slider), añadirlo a `QUALS` en lugar de `INDS`
+2. Añadir traducciones en `UI.es.ind` y `UI.en.ind`
+3. Añadir la clave al prompt de búsqueda (string `prompt` en `fetchData()`)
+4. Añadir la key al JSON esperado del prompt y a `data.json`
+5. Añadir la guía del indicador en ambos idiomas (divs `guide-es` y `guide-en`)
+6. Si es cualitativo (botones en vez de slider), añadirlo a `QUALS` y `UI.*.qual`
 
 ---
 
 ## Cómo desplegarlo en GitHub Pages
 
-1. Subir `index.html` al repo `kikonavarro/macro-dashboard` en la rama `main`
+1. Subir `index.html` y `data.json` al repo en la rama `main`
 2. Ir a **Settings → Pages → Branch: main → Save**
 3. Esperar ~1 minuto
 4. Acceder a `https://kikonavarro.github.io/macro-dashboard/`
 
-Para actualizar el dashboard: commit de un nuevo `index.html` a `main`, GitHub Pages se actualiza automáticamente.
+Para actualizar: commit + push a `main`, GitHub Pages se actualiza automáticamente.
 
 ---
 
 ## Contexto de desarrollo
 
-Este proyecto nació como un widget interactivo en claude.ai y fue evolucionando en esta conversación:
+Este proyecto nació como un widget interactivo en claude.ai y fue evolucionando:
 
 - **v1** — Dashboard estático con sliders manuales (8 indicadores)
 - **v2** — Añadida llamada a Anthropic API con web search para datos en tiempo real
-- **v3** — Añadidos MOVE Index y EUR/USD Cross-Currency Basis, flechas de tendencia, contador de alertas, botón copiar resumen, campo de API key para uso externo a claude.ai
-
-El campo de API key permite que cualquier persona con una cuenta de Anthropic use el dashboard con datos en tiempo real. Cada actualización consume ~$0.01 de crédito.
+- **v3** — Añadidos MOVE Index y EUR/USD Cross-Currency Basis, flechas de tendencia, contador de alertas, botón copiar resumen, campo de API key
+- **v4** — Recalibración de umbrales basada en estándares profesionales. BDT cambiado de % a puntos absolutos BDTI. FCI cambiado de cualitativo a numérico (Chicago Fed NFCI). Pestaña Guía con explicaciones detalladas
+- **v5** — Flujo principal cambiado a data.json precargado (sin coste). API key como opción secundaria. Internacionalización ES/EN. Banner colapsable para visitantes
