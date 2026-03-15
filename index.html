@@ -621,9 +621,7 @@ loadKey();
 (async()=>{
   const hasJson=await loadDataJson();
   if(!apiKey&&hasJson){
-    viewerMode=true;
-    document.getElementById('apikey-banner').style.display='none';
-    document.getElementById('rbtn').style.display='none';
+    viewerMode=false;
   }
   renderGrid();
   document.getElementById('ts').textContent=new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
