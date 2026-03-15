@@ -72,14 +72,21 @@
 
   <!-- API Key banner -->
   <div id="apikey-banner">
-    <p>ANTHROPIC API KEY · necesaria para obtener datos de mercado en tiempo real · se guarda solo en tu navegador</p>
-    <div id="apikey-row">
-      <input type="password" id="apikey-input" placeholder="sk-ant-..." autocomplete="off" oninput="onKeyInput()">
-      <button id="apikey-save" onclick="saveKey()">Guardar key</button>
-      <button id="apikey-clear" onclick="clearKey()" style="font-size:11px;padding:7px 10px;border-radius:8px;background:transparent;border:0.5px solid rgba(255,255,255,0.2);color:#888">✕</button>
+    <div id="apikey-collapsed" style="display:none">
+      <p style="font-size:11px;color:#666;font-family:monospace;margin:0">
+        Datos precargados · <a href="#" onclick="expandApiKey();return false" style="color:#8bc34a;text-decoration:none">¿Tienes API key? Configúrala aquí</a> para datos en tiempo real
+      </p>
     </div>
-    <p id="apikey-status"></p>
-    <p style="margin-top:6px;color:#555">Obtén tu API key gratis en <a href="https://console.anthropic.com" target="_blank" style="color:#8bc34a;text-decoration:none">console.anthropic.com</a> · cada actualización cuesta ~$0.01</p>
+    <div id="apikey-full">
+      <p>ANTHROPIC API KEY · necesaria para obtener datos de mercado en tiempo real · se guarda solo en tu navegador</p>
+      <div id="apikey-row">
+        <input type="password" id="apikey-input" placeholder="sk-ant-..." autocomplete="off" oninput="onKeyInput()">
+        <button id="apikey-save" onclick="saveKey()">Guardar key</button>
+        <button id="apikey-clear" onclick="clearKey()" style="font-size:11px;padding:7px 10px;border-radius:8px;background:transparent;border:0.5px solid rgba(255,255,255,0.2);color:#888">✕</button>
+      </div>
+      <p id="apikey-status"></p>
+      <p style="margin-top:6px;color:#555">Obtén tu API key gratis en <a href="https://console.anthropic.com" target="_blank" style="color:#8bc34a;text-decoration:none">console.anthropic.com</a> · cada actualización cuesta ~$0.01</p>
+    </div>
   </div>
 
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:0.5px solid rgba(255,255,255,0.1);flex-wrap:wrap;gap:10px">
@@ -302,6 +309,15 @@
 </div>
 
 <script>
+function expandApiKey(){
+  document.getElementById('apikey-collapsed').style.display='none';
+  document.getElementById('apikey-full').style.display='block';
+}
+function collapseApiKey(){
+  document.getElementById('apikey-full').style.display='none';
+  document.getElementById('apikey-collapsed').style.display='block';
+}
+
 function switchTab(tab){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -621,7 +637,7 @@ loadKey();
 (async()=>{
   const hasJson=await loadDataJson();
   if(!apiKey&&hasJson){
-    viewerMode=false;
+    collapseApiKey();
   }
   renderGrid();
   document.getElementById('ts').textContent=new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
