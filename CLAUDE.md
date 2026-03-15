@@ -23,24 +23,24 @@ macro-dashboard/
 
 ## Indicadores implementados (10 total)
 
-### Numéricos con slider (8)
+### Numéricos con slider (9)
 
 | ID | Nombre | Umbrales | Inversión |
 |----|--------|----------|-----------|
 | `oil` | Petróleo Brent | $90 / $110 / $130 | No |
-| `vix` | VIX | 18 / 25 / 35 | No |
-| `move` | MOVE Index | 100 / 150 / 200 | No |
+| `vix` | VIX | 20 / 30 / 40 | No |
+| `move` | MOVE Index | 90 / 130 / 175 | No |
 | `crv` | Curva tipos 10Y–2Y | 0% / -0.5% | Sí (invertido = peor) |
 | `inf` | Inflación 5y5y | 2.3% / 2.7% | No |
-| `bdt` | Baltic Dirty Tanker | +20% / +50% | No |
-| `hy` | HY Credit Spreads | 350 / 500 bps | No |
-| `xccy` | EUR/USD Cross-Currency Basis | -10 / -25 / -50 bps | Sí (más negativo = peor) |
+| `bdt` | Baltic Dirty Tanker (BDTI) | 1200 / 1600 / 2000 pts | No |
+| `hy` | HY Credit Spreads | 350 / 500 / 800 bps | No |
+| `xccy` | EUR/USD Cross-Currency Basis | -15 / -25 / -50 bps | Sí (más negativo = peor) |
+| `fci` | Chicago Fed NFCI | -0.25 / +0.25 / +0.70 | No |
 
-### Cualitativos con botones (2)
+### Cualitativos con botones (1)
 
 | ID | Nombre | Opciones |
 |----|--------|----------|
-| `fci` | Financial Conditions Index | laxo / neutro / restrictivo |
 | `liq` | Liquidez global (Fed+ECB+PBOC+BOJ) | creciendo / estable / cayendo |
 
 ---
@@ -93,26 +93,28 @@ headers: {
 
 ```json
 {
-  "brent": 88,
-  "vix": 17.5,
-  "move": 112,
-  "yield_curve": -0.20,
-  "inflation_5y5y": 2.45,
-  "hy_spreads": 340,
-  "tanker_chg": 10,
+  "brent": 103,
+  "vix": 25,
+  "move": 91,
+  "yield_curve": 0.56,
+  "inflation_5y5y": 2.19,
+  "hy_spreads": 309,
+  "bdti": 2835,
   "xccy_basis": -12,
-  "fci": 1,
+  "nfci": -0.51,
   "global_liquidity": 1,
   "trends": {
     "brent": "up",
-    "vix": "down",
-    "move": "flat",
+    "vix": "up",
+    "move": "down",
     "yield_curve": "up",
-    "hy_spreads": "flat",
-    "xccy_basis": "down"
+    "hy_spreads": "up",
+    "xccy_basis": "flat",
+    "bdti": "up",
+    "nfci": "flat"
   },
-  "timestamp": "14 mar 2026",
-  "sources": "Bloomberg, Reuters, FRED"
+  "timestamp": "15 mar 2026",
+  "sources": "Bloomberg, Reuters, FRED, Chicago Fed"
 }
 ```
 
@@ -167,9 +169,9 @@ Los umbrales están en el array `INDS` al inicio del script. Para modificar un i
 ```javascript
 {
   id: 'vix',
-  th: [18, 25, 35],   // ← cambiar aquí los umbrales
+  th: [20, 30, 40],   // ← cambiar aquí los umbrales
   min: 10,            // ← mínimo del slider
-  max: 60,            // ← máximo del slider
+  max: 80,            // ← máximo del slider
   step: 0.5,
   inv: false          // ← true si valores bajos = más peligroso
 }
