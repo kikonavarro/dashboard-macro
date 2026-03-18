@@ -1,24 +1,25 @@
 {
   "brent": 107.38,
-  "vix": 22.37,
+  "vix": 25,
   "move": 79.23,
-  "yield_curve": 0.49,
-  "inflation_5y5y": 2.19,
-  "hy_spreads": 328,
+  "yield_curve": 0.50,
+  "inflation_5y5y": 2.14,
+  "hy_spreads": 322,
   "bdti": 1107,
   "xccy_basis": -14,
-  "nfci": -0.51,
+  "nfci": -0.49,
   "global_liquidity": 1,
   "trends": {
     "brent": "up",
-    "vix": "down",
+    "vix": "up",
     "move": "down",
     "yield_curve": "down",
+    "inflation_5y5y": "down",
     "hy_spreads": "up",
     "xccy_basis": "down",
     "bdti": "down",
     "nfci": "flat"
   },
   "timestamp": "2026-03-18T12:00:00.000Z",
-  "sources": "FRED, CNBC, Fortune, OilPriceAPI, Chicago Fed, Baltic Exchange, Investing.com, Yahoo Finance, CME Group"
+  "sources": "FRED, CNBC, Fortune, Chicago Fed, Baltic Exchange, Investing.com, Yahoo Finance, CME Group"
 }
