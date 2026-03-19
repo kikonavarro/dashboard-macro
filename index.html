@@ -129,10 +129,16 @@
     <div class="guide-intro">
       <p style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;color:#8bc34a;margin-bottom:8px">Cómo funciona este dashboard</p>
       <p>Este dashboard monitoriza <strong style="color:#e8e8e8">10 indicadores macro</strong> que históricamente han anticipado recesiones o crisis financieras. Cada indicador se evalúa en una escala de <strong style="color:#8bc34a">0</strong> (verde, sin riesgo) a <strong style="color:#e57373">3</strong> (rojo, máximo riesgo) según umbrales predefinidos.</p>
-      <p>La <strong style="color:#e8e8e8">evaluación global</strong> es la media aritmética de todos los niveles individuales:</p>
+      <p>La <strong style="color:#e8e8e8">evaluación global</strong> es la media ponderada de todos los niveles individuales. Indicadores con mayor poder predictivo de recesión reciben mayor peso:</p>
       <div class="guide-formula">
-        Riesgo global = Σ señales / 10 indicadores<br>
+        Riesgo global = Σ (señal × peso) / Σ pesos<br>
         <span style="color:#8bc34a">< 0.35 → Riesgo bajo</span> · <span style="color:#f5a623">< 0.9 → Moderado</span> · <span style="color:#D85A30">< 1.7 → Elevado</span> · <span style="color:#e57373">≥ 1.7 → Recesión</span>
+      </div>
+      <div style="margin:12px 0;font-size:12px;color:#bbb;line-height:1.8">
+        <p style="font-size:11px;font-family:monospace;color:#8bc34a;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Tabla de pesos</p>
+        <span style="color:#e8e8e8">×3</span> Curva de tipos · HY Spreads · NFCI <span style="color:#666">— máxima relevancia predictiva</span><br>
+        <span style="color:#e8e8e8">×2</span> VIX · MOVE · Brent · Inflación 5y5y · Liquidez global <span style="color:#666">— relevancia alta</span><br>
+        <span style="color:#e8e8e8">×1</span> Cross-Currency Basis · BDTI <span style="color:#666">— señal complementaria</span>
       </div>
       <p>Los datos se obtienen en tiempo real mediante la API de Anthropic con búsqueda web. Cada actualización busca los valores más recientes en fuentes financieras públicas (Bloomberg, Reuters, FRED, Yahoo Finance, etc.).</p>
     </div>
@@ -153,10 +159,16 @@
     <div class="guide-intro">
       <p style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;color:#8bc34a;margin-bottom:8px">How this dashboard works</p>
       <p>This dashboard monitors <strong style="color:#e8e8e8">10 macro indicators</strong> that have historically anticipated recessions or financial crises. Each indicator is scored on a scale from <strong style="color:#8bc34a">0</strong> (green, no risk) to <strong style="color:#e57373">3</strong> (red, maximum risk) based on predefined thresholds.</p>
-      <p>The <strong style="color:#e8e8e8">overall assessment</strong> is the arithmetic mean of all individual levels:</p>
+      <p>The <strong style="color:#e8e8e8">overall assessment</strong> is the weighted average of all individual levels. Indicators with stronger recession-predictive power receive higher weights:</p>
       <div class="guide-formula">
-        Global risk = Σ signals / 10 indicators<br>
+        Global risk = Σ (signal × weight) / Σ weights<br>
         <span style="color:#8bc34a">< 0.35 → Low risk</span> · <span style="color:#f5a623">< 0.9 → Moderate</span> · <span style="color:#D85A30">< 1.7 → Elevated</span> · <span style="color:#e57373">≥ 1.7 → Recession</span>
+      </div>
+      <div style="margin:12px 0;font-size:12px;color:#bbb;line-height:1.8">
+        <p style="font-size:11px;font-family:monospace;color:#8bc34a;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Weight table</p>
+        <span style="color:#e8e8e8">×3</span> Yield Curve · HY Spreads · NFCI <span style="color:#666">— highest predictive relevance</span><br>
+        <span style="color:#e8e8e8">×2</span> VIX · MOVE · Brent · 5y5y Inflation · Global Liquidity <span style="color:#666">— high relevance</span><br>
+        <span style="color:#e8e8e8">×1</span> Cross-Currency Basis · BDTI <span style="color:#666">— complementary signal</span>
       </div>
       <p>Data is sourced in real time via Anthropic's API with web search. Each update fetches the latest values from public financial sources (Bloomberg, Reuters, FRED, Yahoo Finance, etc.).</p>
     </div>
@@ -182,7 +194,7 @@ let lang=localStorage.getItem('macro_dash_lang')||'en';
 
 const UI={
   es:{
-    tabGuide:'Guía de indicadores', title:'Dashboard de riesgo de recesión',
+    tabGuide:'Guía de indicadores', title:'Dashboard de riesgo de recesión', weight:'Peso',
     alertSuffix:'señales en alerta', copyBtn:'⎘ Copiar resumen', refreshBtn:'Actualizar', copied:'copiado', downloaded:'data.json descargado',
     searching:'Buscando datos de mercado...', apiKeyDesc:'ANTHROPIC API KEY · necesaria para obtener datos de mercado en tiempo real · se guarda solo en tu navegador',
     apiKeyCollapsed:'Datos precargados', apiKeyLink:'¿Tienes API key? Configúrala aquí', apiKeyLinkSuffix:'para datos en tiempo real',
@@ -207,7 +219,7 @@ const UI={
     qual:{liq:{name:'Liquidez global',cat:'Fed · ECB · PBOC · BOJ',opts:['creciendo','estable','cayendo'],labs:['expansiva','neutral','contractiva']}}
   },
   en:{
-    tabGuide:'Indicator Guide', title:'Recession Risk Dashboard',
+    tabGuide:'Indicator Guide', title:'Recession Risk Dashboard', weight:'Weight',
     alertSuffix:'signals in alert', copyBtn:'⎘ Copy summary', refreshBtn:'Refresh', copied:'copied', downloaded:'data.json downloaded',
     searching:'Fetching market data...', apiKeyDesc:'ANTHROPIC API KEY · required for real-time market data · stored only in your browser',
     apiKeyCollapsed:'Preloaded data', apiKeyLink:'Have an API key? Set it up here', apiKeyLinkSuffix:'for real-time data',
@@ -329,19 +341,19 @@ function setKeyStatus(msg,col){
 }
 
 const INDS=[
-  {id:'oil',pre:'$',suf:'',min:50,max:160,val:88,th:[90,110,130],step:1,inv:false,key:'brent'},
-  {id:'vix',pre:'',suf:'',min:10,max:80,val:17,th:[20,30,40],step:0.5,inv:false,key:'vix'},
-  {id:'move',pre:'',suf:'',min:50,max:250,val:91,th:[90,130,175],step:1,inv:false,key:'move'},
-  {id:'crv',pre:'',suf:'%',min:-1.5,max:0.8,val:-0.2,th:[0,-0.5],step:0.05,inv:true,key:'yield_curve'},
-  {id:'inf',pre:'',suf:'%',min:1.5,max:3.5,val:2.45,th:[2.3,2.7],step:0.05,inv:false,key:'inflation_5y5y'},
-  {id:'bdt',pre:'',suf:' pts',min:400,max:3500,val:1000,th:[1200,1600,2000],step:10,inv:false,key:'bdti'},
-  {id:'hy',pre:'',suf:' bps',min:200,max:1200,val:309,th:[350,500,800],step:5,inv:false,key:'hy_spreads'},
-  {id:'xccy',pre:'',suf:' bps',min:-120,max:20,val:-12,th:[-15,-25,-50],step:1,inv:true,key:'xccy_basis'},
-  {id:'fci',pre:'',suf:'',min:-1.0,max:2.0,val:0.0,th:[-0.25,0.25,0.70],step:0.01,inv:false,key:'nfci'}
+  {id:'oil',pre:'$',suf:'',min:50,max:160,val:88,th:[90,110,130],step:1,inv:false,key:'brent',w:2},
+  {id:'vix',pre:'',suf:'',min:10,max:80,val:17,th:[20,30,40],step:0.5,inv:false,key:'vix',w:2},
+  {id:'move',pre:'',suf:'',min:50,max:250,val:91,th:[90,130,175],step:1,inv:false,key:'move',w:2},
+  {id:'crv',pre:'',suf:'%',min:-1.5,max:0.8,val:-0.2,th:[0,-0.5],step:0.05,inv:true,key:'yield_curve',w:3},
+  {id:'inf',pre:'',suf:'%',min:1.5,max:3.5,val:2.45,th:[2.3,2.7],step:0.05,inv:false,key:'inflation_5y5y',w:2},
+  {id:'bdt',pre:'',suf:' pts',min:400,max:3500,val:1000,th:[1200,1600,2000],step:10,inv:false,key:'bdti',w:1},
+  {id:'hy',pre:'',suf:' bps',min:200,max:1200,val:309,th:[350,500,800],step:5,inv:false,key:'hy_spreads',w:3},
+  {id:'xccy',pre:'',suf:' bps',min:-120,max:20,val:-12,th:[-15,-25,-50],step:1,inv:true,key:'xccy_basis',w:1},
+  {id:'fci',pre:'',suf:'',min:-1.0,max:2.0,val:0.0,th:[-0.25,0.25,0.70],step:0.01,inv:false,key:'nfci',w:3}
 ];
 
 const QUALS={
-  liq:{id:'liq',val:1,key:'global_liquidity'}
+  liq:{id:'liq',val:1,key:'global_liquidity',w:2}
 };
 
 function getSig(ind){
@@ -370,9 +382,10 @@ function cardHTML(ind){
   const badge=liveData?`<span class="badge-live">LIVE</span>`:'';
   const arr=trendArrow(ind.id,ind.inv);
   const slider=viewerMode?'':`<input type="range" min="${ind.min}" max="${ind.max}" step="${ind.step}" value="${ind.val}" oninput="upd('${ind.id}',parseFloat(this.value))" id="sl-${ind.id}">`;
+  const wBadge=`<span style="font-size:9px;font-family:monospace;color:#666;background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;border:0.5px solid rgba(255,255,255,0.08)">×${ind.w}</span>`;
   return `<div class="mc" id="c-${ind.id}">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-  <div><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">${badge}<p style="font-size:10px;color:#888;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;margin:0">${iCat(ind)}</p></div>
+  <div><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">${badge}${wBadge}<p style="font-size:10px;color:#888;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;margin:0">${iCat(ind)}</p></div>
   <p style="font-size:13px;font-weight:500;margin:0;color:#e8e8e8">${iName(ind)}</p></div>
   <div style="display:flex;align-items:baseline;gap:2px">
     <span id="v-${ind.id}" style="font-family:monospace;font-size:19px;font-weight:500;color:${col};white-space:nowrap">${fmt(ind)}</span>${arr}
@@ -392,9 +405,10 @@ function qualHTML(q){
   const arr=trendArrow(q.id,false);
   const opts=UI[lang].qual[q.id]?.opts||['?','?','?'];
   const btns=viewerMode?'':`<div style="display:flex;gap:6px">${opts.map((o,i)=>`<button onclick="updq('${q.id}',${i})" style="flex:1;font-size:11px;padding:5px 2px;border-radius:8px;background:${i===s?'rgba(255,255,255,0.08)':'transparent'};border:0.5px solid rgba(255,255,255,0.2);color:#e8e8e8">${o}</button>`).join('')}</div>`;
+  const wBadge=`<span style="font-size:9px;font-family:monospace;color:#666;background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:4px;border:0.5px solid rgba(255,255,255,0.08)">×${q.w}</span>`;
   return `<div class="mc" id="c-${q.id}">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-  <div><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">${badge}<p style="font-size:10px;color:#888;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;margin:0">${qCat(q)}</p></div>
+  <div><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">${badge}${wBadge}<p style="font-size:10px;color:#888;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;margin:0">${qCat(q)}</p></div>
   <p style="font-size:13px;font-weight:500;margin:0;color:#e8e8e8">${qName(q)}</p></div>
   <div style="display:flex;align-items:center;gap:2px">
     <span id="v-${q.id}" style="font-size:13px;font-weight:500;color:${col}">${qOpt(q,s)}</span>${arr}
@@ -417,10 +431,10 @@ function updateAlertCount(){
   document.getElementById('alert-count').innerHTML=`<span style="color:${col};font-weight:500">${alerts}</span> / ${tot} ${ui('alertSuffix')}`;
 }
 function totalRisk(){
-  let tot=0,cnt=0;
-  INDS.forEach(ind=>{tot+=getSig(ind);cnt++;});
-  tot+=QUALS.liq.val;cnt+=1;
-  const avg=tot/cnt;
+  let tot=0,wSum=0;
+  INDS.forEach(ind=>{tot+=getSig(ind)*ind.w;wSum+=ind.w;});
+  tot+=QUALS.liq.val*QUALS.liq.w;wSum+=QUALS.liq.w;
+  const avg=tot/wSum;
   const r=ui('risks');
   if(avg<0.35)return[0,r[0][0],r[0][1]];
   if(avg<0.9)return[1,r[1][0],r[1][1]];
@@ -489,12 +503,12 @@ function copyReport(){
   INDS.forEach(ind=>{
     const s=getSig(ind),lab=iLab(ind,s);
     const icon=s===0?'🟢':s===1?'🟡':s===2?'🟠':'🔴';
-    lines.push(`${icon} ${iName(ind)}: ${fmt(ind)} — ${lab}`);
+    lines.push(`${icon} ${iName(ind)}: ${fmt(ind)} (×${ind.w}) — ${lab}`);
   });
   ['liq'].forEach(k=>{
     const q=QUALS[k];
     const icon=q.val===0?'🟢':q.val===1?'🟡':'🔴';
-    lines.push(`${icon} ${qName(q)}: ${qOpt(q,q.val)} — ${qLab(q,q.val)}`);
+    lines.push(`${icon} ${qName(q)}: ${qOpt(q,q.val)} (×${q.w}) — ${qLab(q,q.val)}`);
   });
   navigator.clipboard.writeText(lines.join('\n')).then(()=>{
     const t=document.getElementById('copy-toast');
