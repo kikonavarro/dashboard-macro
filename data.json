@@ -9,6 +9,11 @@
   "xccy_basis": -13,
   "nfci": -0.49,
   "global_liquidity": 1,
+  "dxy": 99.34,
+  "copper_gold": 1.16,
+  "jobless_claims": 205,
+  "ism_pmi": 52.4,
+  "sofr_ois": -2,
   "trends": {
     "brent": "flat",
     "vix": "down",
@@ -18,8 +23,13 @@
     "hy_spreads": "up",
     "xccy_basis": "flat",
     "bdti": "up",
-    "nfci": "flat"
+    "nfci": "flat",
+    "dxy": "down",
+    "copper_gold": "down",
+    "jobless_claims": "down",
+    "ism_pmi": "down",
+    "sofr_ois": "flat"
   },
   "timestamp": "2026-03-20T12:00:00.000Z",
-  "sources": "FRED, CNBC, Fortune, Chicago Fed, Baltic Exchange, Investing.com, Yahoo Finance, CME Group"
+  "sources": "FRED, CNBC, Fortune, Chicago Fed, Baltic Exchange, Investing.com, Yahoo Finance, CME Group, ISM, NY Fed, Kitco, Trading Economics"
 }
