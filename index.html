@@ -545,32 +545,17 @@ function copyReport(){
   const loc=lang==='es'?'es-ES':'en-US';
   const now=new Date().toLocaleDateString(loc,{day:'2-digit',month:'short',year:'numeric'});
   const wSum=INDS.reduce((a,ind)=>a+ind.w,0)+QUALS.liq.w;
-  const R=(s,n)=>{s=String(s);return s+' '.repeat(Math.max(0,n-s.length));};
-  const L=(s,n)=>{s=String(s);return ' '.repeat(Math.max(0,n-s.length))+s;};
-  // Build all rows first to compute max column widths
-  const rows=[];
-  INDS.forEach((ind,i)=>{
+  let lines=[`${ui('reportTitle')} — ${now}`,`${ui('reportEval')}: ${label}`,``];
+  INDS.forEach(ind=>{
     const s=getSig(ind),lab=iLab(ind,s);
     const icon=s===0?'🟢':s===1?'🟡':s===2?'🟠':'🔴';
-    const pct=((ind.w/wSum)*100).toFixed(1)+'%';
-    rows.push({num:String(i+1),name:iName(ind),val:fmt(ind),wt:'×'+ind.w+' ('+pct+')',sig:icon+' '+lab});
+    const pct=((ind.w/wSum)*100).toFixed(1);
+    lines.push(`${icon} ${iName(ind)}: ${fmt(ind)} · ×${ind.w} (${pct}%) · ${lab}`);
   });
   const q=QUALS.liq;
   const qicon=q.val===0?'🟢':q.val===1?'🟡':'🔴';
-  const qpct=((q.w/wSum)*100).toFixed(1)+'%';
-  rows.push({num:String(INDS.length+1),name:qName(q),val:qOpt(q,q.val),wt:'×'+q.w+' ('+qpct+')',sig:qicon+' '+qLab(q,q.val)});
-  // Compute column widths (emoji = 2 chars width, so add 1 for signal col)
-  const cN=Math.max(2,ui('colIndicator').length,...rows.map(r=>r.num.length));
-  const cI=Math.max(ui('colIndicator').length,...rows.map(r=>r.name.length));
-  const cV=Math.max(ui('colValue').length,...rows.map(r=>r.val.length));
-  const cW=Math.max(ui('colWeight').length,...rows.map(r=>r.wt.length));
-  const cS=Math.max(ui('colSignal').length,...rows.map(r=>r.sig.length+1));
-  let lines=[`${ui('reportTitle')} — ${now}`,`${ui('reportEval')}: ${label}`,``];
-  lines.push(`| ${R('#',cN)} | ${R(ui('colIndicator'),cI)} | ${L(ui('colValue'),cV)} | ${R(ui('colWeight'),cW)} | ${R(ui('colSignal'),cS)} |`);
-  lines.push(`|${'-'.repeat(cN+2)}|${'-'.repeat(cI+2)}|${'-'.repeat(cV+2)}|${'-'.repeat(cW+2)}|${'-'.repeat(cS+2)}|`);
-  rows.forEach(r=>{
-    lines.push(`| ${R(r.num,cN)} | ${R(r.name,cI)} | ${L(r.val,cV)} | ${R(r.wt,cW)} | ${R(r.sig,cS)} |`);
-  });
+  const qpct=((q.w/wSum)*100).toFixed(1);
+  lines.push(`${qicon} ${qName(q)}: ${qOpt(q,q.val)} · ×${q.w} (${qpct}%) · ${qLab(q,q.val)}`);
   lines.push('');
   const alerts=INDS.filter(ind=>getSig(ind)>=1).length+(q.val>=1?1:0);
   lines.push(`${alerts} / ${INDS.length+1} ${ui('alertSuffix')}`);
