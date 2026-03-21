@@ -545,22 +545,32 @@ function copyReport(){
   const loc=lang==='es'?'es-ES':'en-US';
   const now=new Date().toLocaleDateString(loc,{day:'2-digit',month:'short',year:'numeric'});
   const wSum=INDS.reduce((a,ind)=>a+ind.w,0)+QUALS.liq.w;
-  const pad=(s,n)=>{s=String(s);return s.length>=n?s:s+' '.repeat(n-s.length);};
-  const padL=(s,n)=>{s=String(s);return s.length>=n?s:' '.repeat(n-s.length)+s;};
-  let lines=[`${ui('reportTitle')} — ${now}`,`${ui('reportEval')}: ${label}`,``];
-  const hdr=`| # | ${pad(ui('colIndicator'),26)} | ${padL(ui('colValue'),10)} | ${pad(ui('colWeight'),12)} | ${pad(ui('colSignal'),25)} |`;
-  const sep=`|---|${'-'.repeat(28)}|${'-'.repeat(12)}|${'-'.repeat(14)}|${'-'.repeat(27)}|`;
-  lines.push(hdr,sep);
+  const R=(s,n)=>{s=String(s);return s+' '.repeat(Math.max(0,n-s.length));};
+  const L=(s,n)=>{s=String(s);return ' '.repeat(Math.max(0,n-s.length))+s;};
+  // Build all rows first to compute max column widths
+  const rows=[];
   INDS.forEach((ind,i)=>{
     const s=getSig(ind),lab=iLab(ind,s);
     const icon=s===0?'🟢':s===1?'🟡':s===2?'🟠':'🔴';
     const pct=((ind.w/wSum)*100).toFixed(1)+'%';
-    lines.push(`| ${padL(String(i+1),1)} | ${pad(iName(ind),26)} | ${padL(fmt(ind),10)} | ${pad('×'+ind.w+' ('+pct+')',12)} | ${pad(icon+' '+lab,25)} |`);
+    rows.push({num:String(i+1),name:iName(ind),val:fmt(ind),wt:'×'+ind.w+' ('+pct+')',sig:icon+' '+lab});
   });
   const q=QUALS.liq;
   const qicon=q.val===0?'🟢':q.val===1?'🟡':'🔴';
   const qpct=((q.w/wSum)*100).toFixed(1)+'%';
-  lines.push(`| ${padL(String(INDS.length+1),1)} | ${pad(qName(q),26)} | ${padL(qOpt(q,q.val),10)} | ${pad('×'+q.w+' ('+qpct+')',12)} | ${pad(qicon+' '+qLab(q,q.val),25)} |`);
+  rows.push({num:String(INDS.length+1),name:qName(q),val:qOpt(q,q.val),wt:'×'+q.w+' ('+qpct+')',sig:qicon+' '+qLab(q,q.val)});
+  // Compute column widths (emoji = 2 chars width, so add 1 for signal col)
+  const cN=Math.max(2,ui('colIndicator').length,...rows.map(r=>r.num.length));
+  const cI=Math.max(ui('colIndicator').length,...rows.map(r=>r.name.length));
+  const cV=Math.max(ui('colValue').length,...rows.map(r=>r.val.length));
+  const cW=Math.max(ui('colWeight').length,...rows.map(r=>r.wt.length));
+  const cS=Math.max(ui('colSignal').length,...rows.map(r=>r.sig.length+1));
+  let lines=[`${ui('reportTitle')} — ${now}`,`${ui('reportEval')}: ${label}`,``];
+  lines.push(`| ${R('#',cN)} | ${R(ui('colIndicator'),cI)} | ${L(ui('colValue'),cV)} | ${R(ui('colWeight'),cW)} | ${R(ui('colSignal'),cS)} |`);
+  lines.push(`|${'-'.repeat(cN+2)}|${'-'.repeat(cI+2)}|${'-'.repeat(cV+2)}|${'-'.repeat(cW+2)}|${'-'.repeat(cS+2)}|`);
+  rows.forEach(r=>{
+    lines.push(`| ${R(r.num,cN)} | ${R(r.name,cI)} | ${L(r.val,cV)} | ${R(r.wt,cW)} | ${R(r.sig,cS)} |`);
+  });
   lines.push('');
   const alerts=INDS.filter(ind=>getSig(ind)>=1).length+(q.val>=1?1:0);
   lines.push(`${alerts} / ${INDS.length+1} ${ui('alertSuffix')}`);
