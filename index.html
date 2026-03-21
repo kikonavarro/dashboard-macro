@@ -119,6 +119,7 @@
 
   <div id="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:10px;margin-bottom:10px"></div>
   <div id="verdict" class="mc" style="margin-bottom:6px"></div>
+  <div id="summary-table" class="mc" style="margin-top:10px;padding:1rem 1.25rem;overflow-x:auto"></div>
   <div id="data-source" style="display:none;font-size:10px;color:#666;font-family:monospace;margin-top:6px"></div>
 
   </div><!-- end tab-dashboard -->
@@ -219,7 +220,7 @@ const UI={
     apiKeySave:'Guardar key', apiKeyConsole:'Obtén tu API key gratis en', apiKeyCost:'cada actualización cuesta ~$0.10',
     apiKeySaved:'key guardada · datos live activados', apiKeyInvalid:'introduce una API key válida', apiKeyPrefix:'la key debe empezar por sk-ant-', apiKeyCleared:'key eliminada',
     apiKeyRequired:'Introduce tu API key de Anthropic arriba para cargar datos en tiempo real.',
-    verdictLabel:'evaluación global', verdictUnit:'indicadores',
+    verdictLabel:'evaluación global', verdictUnit:'indicadores', summaryTitle:'Resumen de indicadores', colIndicator:'Indicador', colValue:'Valor', colWeight:'Peso', colSignal:'Señal',
     risks:[['Riesgo bajo','Condiciones de expansión. Todos los indicadores en zona verde.'],['Riesgo moderado','Algunas señales de alerta. Monitorizar de cerca.'],['Riesgo elevado','Múltiples señales de tensión. Posición defensiva recomendada.'],['Riesgo de recesión','Señales sistémicas en rojo. Posicionamiento muy defensivo.']],
     reportTitle:'📊 Macro Dashboard', reportEval:'Evaluación',
     lastUpdate:'última actualización', sources:'fuentes', data:'datos',
@@ -253,7 +254,7 @@ const UI={
     apiKeySave:'Save key', apiKeyConsole:'Get your free API key at', apiKeyCost:'each update costs ~$0.10',
     apiKeySaved:'key saved · live data enabled', apiKeyInvalid:'enter a valid API key', apiKeyPrefix:'key must start with sk-ant-', apiKeyCleared:'key removed',
     apiKeyRequired:'Enter your Anthropic API key above to load real-time data.',
-    verdictLabel:'overall assessment', verdictUnit:'indicators',
+    verdictLabel:'overall assessment', verdictUnit:'indicators', summaryTitle:'Indicator Summary', colIndicator:'Indicator', colValue:'Value', colWeight:'Weight', colSignal:'Signal',
     risks:[['Low risk','Expansion conditions. All indicators in the green zone.'],['Moderate risk','Some warning signals. Monitor closely.'],['Elevated risk','Multiple stress signals. Defensive positioning recommended.'],['Recession risk','Systemic red signals. Very defensive positioning.']],
     reportTitle:'📊 Macro Dashboard', reportEval:'Assessment',
     lastUpdate:'last update', sources:'sources', data:'data',
@@ -501,6 +502,44 @@ function renderVerdict(){
     <p style="font-size:13px;color:#888;margin:0;max-width:360px">${detail}</p>
   </div>`;
   updateAlertCount();
+  renderSummaryTable();
+}
+function renderSummaryTable(){
+  const wSum=INDS.reduce((a,ind)=>a+ind.w,0)+QUALS.liq.w;
+  const icons=['🟢','🟡','🟠','🔴'];
+  let rows='';
+  INDS.forEach((ind,i)=>{
+    const s=getSig(ind),col=TC[Math.min(s,3)],lab=iLab(ind,s);
+    const pct=((ind.w/wSum)*100).toFixed(1);
+    rows+=`<tr style="border-bottom:0.5px solid rgba(255,255,255,0.06)">
+      <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${i+1}</td>
+      <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${iName(ind)}</td>
+      <td style="padding:6px 8px;font-size:12px;font-family:monospace;color:${col};text-align:right">${fmt(ind)}</td>
+      <td style="padding:6px 8px;font-size:11px;font-family:monospace;color:#888;text-align:center">×${ind.w} <span style="color:#555">(${pct}%)</span></td>
+      <td style="padding:6px 8px;font-size:12px;color:${col}">${icons[Math.min(s,3)]} ${lab}</td>
+    </tr>`;
+  });
+  const q=QUALS.liq,qs=q.val,qcol=TC[Math.min(qs,3)];
+  const qpct=((q.w/wSum)*100).toFixed(1);
+  rows+=`<tr>
+    <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${INDS.length+1}</td>
+    <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${qName(q)}</td>
+    <td style="padding:6px 8px;font-size:12px;font-family:monospace;color:${qcol};text-align:right">${qOpt(q,qs)}</td>
+    <td style="padding:6px 8px;font-size:11px;font-family:monospace;color:#888;text-align:center">×${q.w} <span style="color:#555">(${qpct}%)</span></td>
+    <td style="padding:6px 8px;font-size:12px;color:${qcol}">${icons[Math.min(qs,3)]} ${qLab(q,qs)}</td>
+  </tr>`;
+  document.getElementById('summary-table').innerHTML=`
+    <p style="font-size:10px;color:#888;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;margin:0 0 10px">${ui('summaryTitle')} · ${INDS.length+1} ${ui('verdictUnit')}</p>
+    <table style="width:100%;border-collapse:collapse">
+    <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.12)">
+      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:left">#</th>
+      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:left">${ui('colIndicator')}</th>
+      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:right">${ui('colValue')}</th>
+      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:center">${ui('colWeight')}</th>
+      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:left">${ui('colSignal')}</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+    </table>`;
 }
 function upd(id,v){
   const ind=INDS.find(i=>i.id===id);ind.val=v;
