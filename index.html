@@ -119,7 +119,6 @@
 
   <div id="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:10px;margin-bottom:10px"></div>
   <div id="verdict" class="mc" style="margin-bottom:6px"></div>
-  <div id="summary-table" class="mc" style="margin-top:10px;padding:1rem 1.25rem;overflow-x:auto"></div>
   <div id="data-source" style="display:none;font-size:10px;color:#666;font-family:monospace;margin-top:6px"></div>
 
   </div><!-- end tab-dashboard -->
@@ -502,44 +501,6 @@ function renderVerdict(){
     <p style="font-size:13px;color:#888;margin:0;max-width:360px">${detail}</p>
   </div>`;
   updateAlertCount();
-  renderSummaryTable();
-}
-function renderSummaryTable(){
-  const wSum=INDS.reduce((a,ind)=>a+ind.w,0)+QUALS.liq.w;
-  const icons=['🟢','🟡','🟠','🔴'];
-  let rows='';
-  INDS.forEach((ind,i)=>{
-    const s=getSig(ind),col=TC[Math.min(s,3)],lab=iLab(ind,s);
-    const pct=((ind.w/wSum)*100).toFixed(1);
-    rows+=`<tr style="border-bottom:0.5px solid rgba(255,255,255,0.06)">
-      <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${i+1}</td>
-      <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${iName(ind)}</td>
-      <td style="padding:6px 8px;font-size:12px;font-family:monospace;color:${col};text-align:right">${fmt(ind)}</td>
-      <td style="padding:6px 8px;font-size:11px;font-family:monospace;color:#888;text-align:center">×${ind.w} <span style="color:#555">(${pct}%)</span></td>
-      <td style="padding:6px 8px;font-size:12px;color:${col}">${icons[Math.min(s,3)]} ${lab}</td>
-    </tr>`;
-  });
-  const q=QUALS.liq,qs=q.val,qcol=TC[Math.min(qs,3)];
-  const qpct=((q.w/wSum)*100).toFixed(1);
-  rows+=`<tr>
-    <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${INDS.length+1}</td>
-    <td style="padding:6px 8px;font-size:12px;color:#e8e8e8">${qName(q)}</td>
-    <td style="padding:6px 8px;font-size:12px;font-family:monospace;color:${qcol};text-align:right">${qOpt(q,qs)}</td>
-    <td style="padding:6px 8px;font-size:11px;font-family:monospace;color:#888;text-align:center">×${q.w} <span style="color:#555">(${qpct}%)</span></td>
-    <td style="padding:6px 8px;font-size:12px;color:${qcol}">${icons[Math.min(qs,3)]} ${qLab(q,qs)}</td>
-  </tr>`;
-  document.getElementById('summary-table').innerHTML=`
-    <p style="font-size:10px;color:#888;font-family:monospace;text-transform:uppercase;letter-spacing:0.07em;margin:0 0 10px">${ui('summaryTitle')} · ${INDS.length+1} ${ui('verdictUnit')}</p>
-    <table style="width:100%;border-collapse:collapse">
-    <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.12)">
-      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:left">#</th>
-      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:left">${ui('colIndicator')}</th>
-      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:right">${ui('colValue')}</th>
-      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:center">${ui('colWeight')}</th>
-      <th style="padding:6px 8px;font-size:10px;font-family:monospace;text-transform:uppercase;color:#666;text-align:left">${ui('colSignal')}</th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-    </table>`;
 }
 function upd(id,v){
   const ind=INDS.find(i=>i.id===id);ind.val=v;
@@ -583,17 +544,26 @@ function copyReport(){
   const[lv,label]=totalRisk();
   const loc=lang==='es'?'es-ES':'en-US';
   const now=new Date().toLocaleDateString(loc,{day:'2-digit',month:'short',year:'numeric'});
+  const wSum=INDS.reduce((a,ind)=>a+ind.w,0)+QUALS.liq.w;
+  const pad=(s,n)=>{s=String(s);return s.length>=n?s:s+' '.repeat(n-s.length);};
+  const padL=(s,n)=>{s=String(s);return s.length>=n?s:' '.repeat(n-s.length)+s;};
   let lines=[`${ui('reportTitle')} — ${now}`,`${ui('reportEval')}: ${label}`,``];
-  INDS.forEach(ind=>{
+  const hdr=`| # | ${pad(ui('colIndicator'),26)} | ${padL(ui('colValue'),10)} | ${pad(ui('colWeight'),12)} | ${pad(ui('colSignal'),25)} |`;
+  const sep=`|---|${'-'.repeat(28)}|${'-'.repeat(12)}|${'-'.repeat(14)}|${'-'.repeat(27)}|`;
+  lines.push(hdr,sep);
+  INDS.forEach((ind,i)=>{
     const s=getSig(ind),lab=iLab(ind,s);
     const icon=s===0?'🟢':s===1?'🟡':s===2?'🟠':'🔴';
-    lines.push(`${icon} ${iName(ind)}: ${fmt(ind)} (×${ind.w}) — ${lab}`);
+    const pct=((ind.w/wSum)*100).toFixed(1)+'%';
+    lines.push(`| ${padL(String(i+1),1)} | ${pad(iName(ind),26)} | ${padL(fmt(ind),10)} | ${pad('×'+ind.w+' ('+pct+')',12)} | ${pad(icon+' '+lab,25)} |`);
   });
-  ['liq'].forEach(k=>{
-    const q=QUALS[k];
-    const icon=q.val===0?'🟢':q.val===1?'🟡':'🔴';
-    lines.push(`${icon} ${qName(q)}: ${qOpt(q,q.val)} (×${q.w}) — ${qLab(q,q.val)}`);
-  });
+  const q=QUALS.liq;
+  const qicon=q.val===0?'🟢':q.val===1?'🟡':'🔴';
+  const qpct=((q.w/wSum)*100).toFixed(1)+'%';
+  lines.push(`| ${padL(String(INDS.length+1),1)} | ${pad(qName(q),26)} | ${padL(qOpt(q,q.val),10)} | ${pad('×'+q.w+' ('+qpct+')',12)} | ${pad(qicon+' '+qLab(q,q.val),25)} |`);
+  lines.push('');
+  const alerts=INDS.filter(ind=>getSig(ind)>=1).length+(q.val>=1?1:0);
+  lines.push(`${alerts} / ${INDS.length+1} ${ui('alertSuffix')}`);
   navigator.clipboard.writeText(lines.join('\n')).then(()=>{
     const t=document.getElementById('copy-toast');
     t.textContent=ui('copied');
