@@ -7,6 +7,9 @@ Dashboard interactivo de riesgo de recesión global que combina 10 indicadores m
 El proyecto vive en: `https://github.com/kikonavarro/macro-dashboard`
 URL pública (GitHub Pages): `https://kikonavarro.github.io/macro-dashboard/`
 
+**Ruta local en el Mac:** `/Users/franciscojaviernavarro/Documents/Claude_Projects/Dashboard Macro`
+**Remote git:** `https://[token]@github.com/kikonavarro/dashboard-macro.git` (HTTPS con token, configurado — git push funciona directamente desde Cowork)
+
 ---
 
 ## Arquitectura
