@@ -1,7 +1,7 @@
 {
-  "brent": 110.05,
-  "vix": 24.17,
-  "move": 81.68,
+  "brent": 109.48,
+  "vix": 26.69,
+  "move": 81.7,
   "yield_curve": 0.47,
   "inflation_5y5y": 2.11,
   "hy_spreads": 317,
@@ -10,7 +10,7 @@
   "nfci": -0.43,
   "global_liquidity": 1,
   "dxy": 99.81,
-  "copper_gold": 1.27,
+  "copper_gold": 1.18,
   "jobless_claims": 202,
   "ism_pmi": 52.7,
   "sofr_ois": 4,
@@ -19,17 +19,17 @@
   "consumer_sentiment": 55.5,
   "building_permits": 1376,
   "trends": {
-    "brent": "up",
+    "brent": "flat",
     "vix": "up",
     "move": "flat",
-    "yield_curve": "down",
+    "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
     "nfci": "flat",
-    "dxy": "down",
-    "copper_gold": "flat",
+    "dxy": "flat",
+    "copper_gold": "down",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-04-07T12:00:00.000Z",
-  "sources": "Investing.com, CNBC, Yahoo Finance, FRED St. Louis Fed, TradingEconomics, MacroMicro, Chicago Fed, US DOL, ISM, CME Group, Kitco, JM Bullion, US Census Bureau, Conference Board, University of Michigan, Fortune, Bloomberg"
+  "timestamp": "2026-04-07T18:27:58.000Z",
+  "sources": "Yahoo Finance"
 }
