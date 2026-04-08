@@ -1,7 +1,7 @@
 {
-  "brent": 109.0,
-  "vix": 26.1,
-  "move": 83.15,
+  "brent": 95.69,
+  "vix": 21.32,
+  "move": 83.2,
   "yield_curve": 0.5,
   "inflation_5y5y": 2.11,
   "hy_spreads": 317,
@@ -9,8 +9,8 @@
   "xccy_basis": -12,
   "nfci": -0.43,
   "global_liquidity": 1,
-  "dxy": 98.84,
-  "copper_gold": 1.27,
+  "dxy": 99.0,
+  "copper_gold": 1.21,
   "jobless_claims": 202,
   "ism_pmi": 52.7,
   "sofr_ois": 4,
@@ -20,16 +20,16 @@
   "building_permits": 1376,
   "trends": {
     "brent": "down",
-    "vix": "up",
-    "move": "up",
-    "yield_curve": "up",
+    "vix": "down",
+    "move": "flat",
+    "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
     "nfci": "flat",
-    "dxy": "down",
-    "copper_gold": "flat",
+    "dxy": "flat",
+    "copper_gold": "down",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-04-08T12:00:00.000Z",
-  "sources": "Bloomberg, Investing.com, CNBC, Yahoo Finance, FRED St. Louis Fed, TradingEconomics, MacroMicro, Chicago Fed, US DOL, ISM, CME Group, Kitco, JM Bullion, US Census Bureau, Conference Board, University of Michigan, Fortune"
+  "timestamp": "2026-04-08T18:36:20.000Z",
+  "sources": "Yahoo Finance"
 }
