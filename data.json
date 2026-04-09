@@ -1,15 +1,15 @@
 {
-  "brent": 95.69,
-  "vix": 21.32,
-  "move": 83.2,
-  "yield_curve": 0.5,
+  "brent": 97.39,
+  "vix": 24.5,
+  "move": 83.15,
+  "yield_curve": 0.52,
   "inflation_5y5y": 2.11,
   "hy_spreads": 317,
-  "bdti": 2842,
+  "bdti": 1107,
   "xccy_basis": -12,
   "nfci": -0.43,
   "global_liquidity": 1,
-  "dxy": 99.0,
+  "dxy": 99.04,
   "copper_gold": 1.21,
   "jobless_claims": 202,
   "ism_pmi": 52.7,
@@ -26,7 +26,7 @@
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
     "xccy_basis": "flat",
-    "bdti": "flat",
+    "bdti": "down",
     "nfci": "flat",
     "dxy": "flat",
     "copper_gold": "down",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-04-08T18:36:20.000Z",
-  "sources": "Yahoo Finance"
+  "timestamp": "2026-04-09T12:00:00.000Z",
+  "sources": "TradingEconomics, Investing.com, CNBC, Yahoo Finance, FRED St. Louis Fed, Fortune, CME Group, Chicago Fed, US DOL, ISM, Conference Board, University of Michigan, US Census Bureau, MacroMicro"
 }
