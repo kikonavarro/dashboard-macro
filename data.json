@@ -1,7 +1,7 @@
 {
-  "brent": 101.9,
-  "vix": 19.5,
-  "move": 70.78,
+  "brent": 104.97,
+  "vix": 19.24,
+  "move": 69.9,
   "yield_curve": 0.5,
   "inflation_5y5y": 2.16,
   "hy_spreads": 287,
@@ -9,7 +9,7 @@
   "xccy_basis": -10,
   "nfci": -0.5,
   "global_liquidity": 1,
-  "dxy": 98.4,
+  "dxy": 98.73,
   "copper_gold": 1.28,
   "jobless_claims": 207,
   "ism_pmi": 52.7,
@@ -20,15 +20,15 @@
   "building_permits": 1386,
   "trends": {
     "brent": "up",
-    "vix": "up",
-    "move": "up",
+    "vix": "down",
+    "move": "down",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
-    "nfci": "down",
-    "dxy": "up",
+    "nfci": "flat",
+    "dxy": "flat",
     "copper_gold": "flat",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-04-22T12:00:00.000Z",
-  "sources": "Trading Economics, FRED, Investing.com, CNBC, Yahoo Finance, Chicago Fed, ISM, University of Michigan, Census Bureau, Conference Board, Fortune, CME Group, FXStreet; xccy_basis and sofr_ois are approximations"
+  "timestamp": "2026-04-23T18:34:59.000Z",
+  "sources": "Yahoo Finance"
 }
