@@ -1,7 +1,7 @@
 {
-  "brent": 108.83,
+  "brent": 107.74,
   "vix": 16.78,
-  "move": 70.41,
+  "move": 72.07,
   "yield_curve": 0.51,
   "inflation_5y5y": 2.25,
   "hy_spreads": 283,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.52,
   "global_liquidity": 1,
-  "dxy": 98.21,
-  "copper_gold": 1.28,
+  "dxy": 98.19,
+  "copper_gold": 1.29,
   "jobless_claims": 189,
   "ism_pmi": 52.7,
   "sofr_ois": 3,
@@ -20,11 +20,11 @@
   "building_permits": 1372,
   "trends": {
     "brent": "down",
-    "vix": "down",
-    "move": "down",
+    "vix": "flat",
+    "move": "up",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
-    "hy_spreads": "down",
+    "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
     "nfci": "down",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "down"
   },
-  "timestamp": "2026-05-03T16:00:00.000Z",
-  "sources": "Trading Economics (Brent 108.83 May 1), CNBC/CBOE (VIX 16.78), Investing.com (MOVE 70.41 May 1), Treasury/H.15 (10Y 4.39, 2Y 3.88 spread 0.51 May 1), FRED T5YIFR (5y5y inflation 2.25 April), FRED BAMLH0A0HYM2 (HY OAS 283bp April), MacroMicro (BDTI 3658 April 9 latest), CME EUR/USD xccy basis approx -10bp, Chicago Fed NFCI -0.52 week ending April 24, BOJ/ECB/Fed/PBOC balance sheets stable=1, TradingEconomics (DXY 98.21 May 1), Trading Economics (Copper 5.91/lb, Gold 4612.50/oz; ratio 1.28), DOL (initial claims 189k week ending April 25), ISM Manufacturing PMI 52.7 April, SOFR-OIS approx 3bp, Conference Board LEI YoY approx -1.5% (March release), FRED SAHMCURRENT 0.27 February latest, U Michigan Consumer Sentiment final April 49.8, Census Bureau building permits 1372k SAAR March; xccy_basis sofr_ois lei_yoy are approximations from latest available data."
+  "timestamp": "2026-05-04T06:11:23.000Z",
+  "sources": "TradingEconomics/OilPrice (Brent ~107.74 May 4, down from 111 May 1 amid US-Iran developments), Yahoo Finance/CBOE (VIX 16.78 latest), Investing.com (MOVE 72.07 latest, 70.41 close May 1), Treasury/H.15 (10Y 4.39, 2Y 3.88, spread 0.51 May 1), FRED T5YIFR (5y5y inflation 2.25 April), FRED BAMLH0A0HYM2 (HY OAS 283bp April latest monthly), MacroMicro (BDTI 3658 April 9 latest), CME EUR/USD xccy basis ~-10bp (approx), Chicago Fed NFCI -0.52 week ending April 24 (next release May 6), BOJ/ECB/Fed/PBOC balance sheets stable=1 (Fed pausing, ECB on hold, BOJ slow hike, PBOC easing), TradingEconomics (DXY 98.19 May 1, fell below 98 Friday), Kitco/Trading Economics (Copper 5.9645/lb, Gold 4629.22/oz, ratio 1.29), DOL (initial claims 189k week ending April 25, down from 215k prior), ISM Manufacturing PMI 52.7 April (unchanged from March), SOFR-OIS approx 3bp (approximation), Conference Board LEI YoY approx -1.5% (March release, next May 22), FRED SAHMCURRENT 0.27 February latest, U Michigan Consumer Sentiment final April 49.8 (record low), Census Bureau building permits 1372k SAAR March (next release May 21); xccy_basis sofr_ois lei_yoy carried from latest available data."
 }
