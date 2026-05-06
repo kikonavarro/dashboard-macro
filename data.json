@@ -1,7 +1,7 @@
 {
-  "brent": 109.79,
-  "vix": 17.31,
-  "move": 77.9,
+  "brent": 111.39,
+  "vix": 18.29,
+  "move": 77.86,
   "yield_curve": 0.46,
   "inflation_5y5y": 2.25,
   "hy_spreads": 283,
@@ -9,8 +9,8 @@
   "xccy_basis": -15,
   "nfci": -0.52,
   "global_liquidity": 1,
-  "dxy": 98.45,
-  "copper_gold": 1.31,
+  "dxy": 98.39,
+  "copper_gold": 1.33,
   "jobless_claims": 189,
   "ism_pmi": 52.7,
   "sofr_ois": 3,
@@ -19,8 +19,8 @@
   "consumer_sentiment": 49.8,
   "building_permits": 1372,
   "trends": {
-    "brent": "flat",
-    "vix": "down",
+    "brent": "up",
+    "vix": "up",
     "move": "flat",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
@@ -29,15 +29,15 @@
     "bdti": "flat",
     "nfci": "flat",
     "dxy": "flat",
-    "copper_gold": "flat",
-    "jobless_claims": "flat",
+    "copper_gold": "up",
+    "jobless_claims": "down",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
     "lei_yoy": "flat",
     "sahm_rule": "flat",
-    "consumer_sentiment": "flat",
-    "building_permits": "flat"
+    "consumer_sentiment": "up",
+    "building_permits": "down"
   },
-  "timestamp": "2026-05-05T18:41:13.000Z",
-  "sources": "Yahoo Finance"
+  "timestamp": "2026-05-06T15:00:00.000Z",
+  "sources": "OilPriceAPI/Fortune (Brent ~$111.39/bbl May 6 intraday, was $109.87 close May 5); CNBC/CBOE (VIX 18.29, +7.65% on May 4 close); Investing.com (MOVE Index 77.86 May 4 close); FRED T10Y2Y (10Y-2Y spread +0.46pp); FRED T5YIFR (5y5y forward inflation 2.25% April); FRED BAMLH0A0HYM2 (HY OAS 283bp / 2.83% April); MacroMicro (BDTI 3658 April 9); CME EUR/USD xccy basis ~-15bp; Chicago Fed NFCI -0.52 wk ending Apr 24 (next release May 6 8:30am ET); Fed/ECB/BOJ/PBOC stable=1; TradingEconomics (DXY 98.39 May 5, hovered 98.3-98.5 on Iran ceasefire concerns); TradingEconomics (Copper $5.85/lb May 5, gold ~$4400/oz; ratio = 5.85/4400*1000 ≈ 1.33); DOL (claims 189k wk ending Apr 25, -26k from prior 215k revised; 4-wk avg 207.5k); ISM Mfg PMI 52.7 April (same as March, 18th month expansion; next May data June 1); SOFR-OIS ~3bp estimate; Conference Board LEI: March -0.6% MoM to 97.3, YoY ~-1.5% (April release May 22); FRED SAHMCURRENT 0.27 latest; U Mich Consumer Sentiment final April 49.8 (revised up from 47.6 initial; record low); Census building permits 1372k SAAR March (-10.8% MoM, April release May 21)."
 }
