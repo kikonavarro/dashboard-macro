@@ -1,7 +1,7 @@
 {
-  "brent": 104.97,
-  "vix": 18.41,
-  "move": 67.25,
+  "brent": 107.99,
+  "vix": 18.11,
+  "move": 70.7,
   "yield_curve": 0.48,
   "inflation_5y5y": 2.27,
   "hy_spreads": 279,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.45,
   "global_liquidity": 1,
-  "dxy": 98.03,
-  "copper_gold": 1.36,
+  "dxy": 98.32,
+  "copper_gold": 1.41,
   "jobless_claims": 200,
   "ism_pmi": 52.7,
   "sofr_ois": 2,
@@ -19,9 +19,9 @@
   "consumer_sentiment": 48.2,
   "building_permits": 1372,
   "trends": {
-    "brent": "flat",
-    "vix": "up",
-    "move": "flat",
+    "brent": "up",
+    "vix": "down",
+    "move": "up",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
@@ -30,14 +30,14 @@
     "nfci": "flat",
     "dxy": "flat",
     "copper_gold": "up",
-    "jobless_claims": "up",
+    "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
     "lei_yoy": "flat",
     "sahm_rule": "flat",
-    "consumer_sentiment": "down",
+    "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-05-12T20:00:00.000Z",
-  "sources": "TradingEconomics/Investing.com (Brent $104.97/bbl May 12, +0.73% on day, slight pullback from May 11 ~$105.8 on Iran-Israel/Hormuz tensions); CBOE/Yahoo (VIX 18.41 May 12 intraday, +7.1% / +1.22pts on equity weakness); Yahoo/Investing.com (MOVE Index 67.25 May 12, range-bound near multi-year lows); FRED T10Y2Y (10Y 4.38% - 2Y 3.90% = +0.48pp May 8, no update May 11/12 yet); FRED T5YIFR (5y5y forward inflation 2.27% May 5 latest); FRED BAMLH0A0HYM2 (HY OAS 279bp, ~2.79% per FRED/TradingEconomics May 2026); Investing.com BAID (BDTI ~1107, stable, well off April 9 reading); CME EUR/USD xccy basis ~-10bp; Chicago Fed NFCI -0.45 latest, next release May 13; Fed pausing runoff + ECB stable + PBOC easing + BOJ tightening => global liquidity stable=1; Yahoo/Investing.com (DXY 98.03 May 12 open, slight rebound from 97.84 May 8); Kitco/DailyMetalPrice (Copper $6.44/lb May 11, Gold $4735.52/oz May 11; ratio 6.44/4735.52*1000=1.36, up from 1.31 as copper outperformed); DOL (Initial Jobless Claims 200k wk ending May 2, up from 190k prior wk but still historically low, continuing claims 1.766M 2-yr low); ISM (Manufacturing PMI 52.7 April unchanged from March, 4th straight month of expansion); SOFR-OIS spread ~2bp tight; Conference Board (LEI -1.0% over Sep25-Mar26 6-month rate, March 97.3 -0.6% MoM, YoY ~-1.8%; next release May 22); FRED SAHMCURRENT 0.27 Feb 2026 latest reading; UMich (Consumer Sentiment 48.2 May preliminary, fresh record low since 1952, 1yr inflation expectations 4.5%, missed 49.5 estimate); Census (Building Permits 1372k SAAR March -10.8% MoM, next release May 21)."
+  "timestamp": "2026-05-12T18:46:57.000Z",
+  "sources": "Yahoo Finance"
 }
