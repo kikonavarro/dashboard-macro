@@ -1,16 +1,16 @@
 {
-  "brent": 105.63,
-  "vix": 17.8,
-  "move": 71.7,
-  "yield_curve": 0.46,
-  "inflation_5y5y": 2.27,
+  "brent": 105.87,
+  "vix": 17.99,
+  "move": 70.24,
+  "yield_curve": 0.48,
+  "inflation_5y5y": 2.24,
   "hy_spreads": 279,
   "bdti": 1107,
   "xccy_basis": -10,
-  "nfci": -0.51,
+  "nfci": -0.4,
   "global_liquidity": 1,
-  "dxy": 98.52,
-  "copper_gold": 1.41,
+  "dxy": 98.49,
+  "copper_gold": 1.4,
   "jobless_claims": 200,
   "ism_pmi": 52.7,
   "sofr_ois": 2,
@@ -27,7 +27,7 @@
     "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
-    "nfci": "flat",
+    "nfci": "up",
     "dxy": "flat",
     "copper_gold": "up",
     "jobless_claims": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-05-13T18:48:17.000Z",
-  "sources": "Yahoo Finance"
+  "timestamp": "2026-05-14T15:30:00.000Z",
+  "sources": "TradingEconomics (Brent $105.87/bbl May 14, +0.22%/day, easing from May 13 $107 high); CBOE/Yahoo (VIX 17.99 May 13 close, mildly lower vs prior week); Yahoo/CNBC (MOVE Index 70.24 May 13, ticked up from ~67 vs prior week as Treasury vol picks up on stronger CPI); FRED T10Y2Y (10Y-2Y spread ~+0.48pp mid-May, 10Y at 4.49% highest since Jul-25 on hot CPI 3.8%); FRED T5YIFR (5y5y forward inflation 2.24% May 13); FRED BAMLH0A0HYM2 (HY OAS 279bp/2.79% May 2026 latest); Investing.com BAID (BDTI carried at ~1107 - fresh print unavailable today, value held from prior week); CME EUR/USD 3M xccy basis ~-10bp (held - no fresh daily print); Chicago Fed NFCI -0.4 May 2026 release (tightening from -0.51 prior week but still loose); Fed paused runoff, ECB tapering, PBOC easing, BOJ flat => global liquidity stable=1; TradingEconomics/Yahoo (DXY 98.49 May 14, +0.01%); Kitco/TradingEconomics (Copper $6.57/lb May 13 +1.34%, Gold $4696.53/oz May 13; ratio 6.57/4696.53*1000=1.40, up trend); DOL/Bloomberg (Initial Jobless Claims 200k wk ending May 2, +10k vs prior; continuing claims 1.766M at 2-yr low); ISM (Manufacturing PMI 52.7 April unchanged from March, 4th straight expansion, next May release June 1); SOFR-OIS spread ~2bp (tight, held); Conference Board (LEI 97.3 March -0.6% MoM, ~-1.8% YoY; April release scheduled May 21); FRED SAHMCURRENT 0.27 April 2026 (next May 8 release); UMich (Consumer Sentiment 48.2 May preliminary, fresh record low since 1952, missed 49.5 est, 1yr inflation expectations 4.5%); Census (Building Permits 1372k SAAR March -10.8% MoM, April release May 21)."
 }
