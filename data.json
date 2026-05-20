@@ -1,7 +1,7 @@
 {
-  "brent": 110.2,
-  "vix": 18.1,
-  "move": 85.32,
+  "brent": 104.93,
+  "vix": 17.5,
+  "move": 85.3,
   "yield_curve": 0.54,
   "inflation_5y5y": 2.24,
   "hy_spreads": 279,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.51,
   "global_liquidity": 1,
-  "dxy": 99.4,
-  "copper_gold": 1.38,
+  "dxy": 99.1,
+  "copper_gold": 1.4,
   "jobless_claims": 211,
   "ism_pmi": 52.7,
   "sofr_ois": 2,
@@ -19,17 +19,17 @@
   "consumer_sentiment": 48.2,
   "building_permits": 1372,
   "trends": {
-    "brent": "up",
+    "brent": "down",
     "vix": "down",
-    "move": "up",
-    "yield_curve": "up",
+    "move": "flat",
+    "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
     "nfci": "flat",
-    "dxy": "up",
-    "copper_gold": "flat",
+    "dxy": "flat",
+    "copper_gold": "up",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-05-20T14:30:00.000Z",
-  "sources": "Fortune/TradingEconomics (Brent ~$110/bbl May 19-20, recovering after pullback from $112.93 spike, Middle East tensions driving volatility); CBOE/Yahoo Finance (VIX 18.06 latest close May 19, down from 18.99 prev week despite oil-induced jitters); ICE BofAML/Yahoo Finance (MOVE Index 85.32 close May 19, +6.8% w/w as Treasury vol picks up); FRED T10Y2Y (10Y-2Y spread +0.54pp May 18, steepening as 10Y rose to 4.7% 16-mo high); FRED T5YIFR (5y5y forward inflation 2.24% May 13, ticked down slightly from 2.27% May 5); FRED BAMLH0A0HYM2 (HY OAS 279bp May 2026, stable, no credit stress); Investing.com BAID (BDTI 1107 May 20, well below April highs ~3658); CME EUR/USD 3M xccy basis ~-10bp estimate (tight, no USD funding stress); Chicago Fed NFCI -0.51 May 2026 (looser-than-average financial conditions, unchanged); Fed QT continuing + ECB tapering + PBOC easing + BOJ tightening => global liquidity stable=1; TradingEconomics (DXY 99.4 May 19, 6-week high, inflation-driven dollar strength up from 97.84 May 11 low); TradingEconomics/Fortune (Copper $6.25/lb May 19; Gold $4534/oz May 19; ratio 6.25/4534*1000 ≈ 1.38, flat w/w); DOL (Initial Jobless Claims 211k week ending May 9, +12k vs 199k prior, 4-wk avg 203.75k); ISM (Manufacturing PMI 52.7 April unchanged, 4th month new orders expansion 54.1, next release June 1); SOFR-OIS spread ~2bp (typical, no funding stress, SOFR data through May 18); Conference Board (LEI 97.3 March -0.6% MoM, ~-1.8% YoY; April release May 22); FRED SAHMCURRENT 0.20 (well below 0.50 threshold; SAHMREALTIME 0.27 Feb 2026); UMich (Consumer Sentiment 48.2 May preliminary, near record low, missed 49.5 est, vs April 49.8; final release May 22); Census (Building Permits 1372k SAAR March -10.8% MoM, -7.4% YoY; April release May 21)."
+  "timestamp": "2026-05-20T18:57:57.000Z",
+  "sources": "Yahoo Finance"
 }
