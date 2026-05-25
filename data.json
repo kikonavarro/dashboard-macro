@@ -1,9 +1,9 @@
 {
   "brent": 103.94,
-  "vix": 16.7,
+  "vix": 16.76,
   "move": 78.43,
   "yield_curve": 0.43,
-  "inflation_5y5y": 2.29,
+  "inflation_5y5y": 2.26,
   "hy_spreads": 286,
   "bdti": 2249,
   "xccy_basis": -10,
@@ -23,7 +23,7 @@
     "vix": "down",
     "move": "down",
     "yield_curve": "flat",
-    "inflation_5y5y": "up",
+    "inflation_5y5y": "down",
     "hy_spreads": "down",
     "xccy_basis": "flat",
     "bdti": "up",
@@ -32,12 +32,12 @@
     "copper_gold": "up",
     "jobless_claims": "down",
     "ism_pmi": "flat",
-    "sofr_ois": "down",
+    "sofr_ois": "flat",
     "lei_yoy": "up",
     "sahm_rule": "flat",
     "consumer_sentiment": "down",
     "building_permits": "up"
   },
-  "timestamp": "2026-05-24T12:00:00.000Z",
-  "sources": "TradingEconomics/Fortune (Brent $103.94/bbl May 22 close, +1.33% d/d, Iran tensions); FRED VIXCLS (VIX 16.70 May 22 close, down from 18.43 May 15); Yahoo Finance MOVE (78.43 May 22 close, bond vol easing); Advisor Perspectives May 22 (10Y 4.56% - 2Y 4.13% = 0.43pp); FRED T5YIFR (5y5y forward inflation 2.29% May 2026); FRED BAMLH0A0HYM2 (HY OAS 2.86% / 286bp May 2026 month value); Investing.com BAID (BDTI 2249 May 20, +58 pts); CME estimate (EUR/USD 3M xccy basis ~-10bp, tight); Chicago Fed NFCI -0.523 week of May 15 (looser); Composite tracker (Fed pause + ECB cuts + PBOC ease + BOJ normalising = liquidity neutral=1); TradingEconomics (DXY 99.32 May 22, April highs on Iran); KITCO/Fortune (Copper $6.35/lb May 22, Gold $4516.75/oz May 22, ratio 1.41); DOL (Initial Jobless Claims 209k week ending May 16, down from 212k); ISM (Manufacturing PMI 52.7 April 2026 — May release pending June 1); SOFR-OIS spread est ~2bp (tight, EFFR-IORB 1bp); Conference Board (LEI 97.4 April +0.1% MoM, ~-1.7% YoY estimate); FRED SAHMCURRENT (Sahm Rule 0.27 Feb 2026 latest); UMich (Consumer Sentiment 44.8 May final, record low since 1952); Census/dshort (Building Permits 1442k SAAR April +5.8% MoM)."
+  "timestamp": "2026-05-25T06:11:20.000Z",
+  "sources": "TradingEconomics/Investing.com (Brent $103.94/bbl May 22 close, +1.33% d/d); FRED VIXCLS / Yahoo Finance (VIX 16.76 May 22 close, week down from ~18); Yahoo Finance MOVE (78.43 May 22 close, bond vol easing); Advisor Perspectives May 22 Treasury snapshot (10Y 4.56% - 2Y 4.13% = 0.43pp); FRED T5YIFR (5y5y forward inflation 2.26% May 22); FRED BAMLH0A0HYM2 (HY OAS 2.86% / 286bp May 2026); Investing.com BAID (BDTI 2249 May 20); CME estimate (EUR/USD 3M xccy basis ~-10bp, tight); Chicago Fed NFCI -0.523 week of May 15 (looser); Composite liquidity tracker (Fed pause + ECB cuts + PBOC ease + BOJ normalising = neutral=1); TradingEconomics DXY (99.32 May 22); KITCO/Fortune (Copper $6.35/lb, Gold $4516.75/oz May 22, ratio 1.41); DOL (Initial Jobless Claims 209k week ending May 16, down from 212k); ISM (Manufacturing PMI 52.7 April 2026, May release June 1); SOFR-OIS spread est ~2bp (tight); Conference Board (LEI 97.4 April +0.1% MoM, ~-1.7% YoY); FRED SAHMCURRENT (Sahm Rule 0.27 Feb 2026 latest); UMich (Consumer Sentiment 44.8 May final, record low since 1952); Census/dshort (Building Permits 1442k SAAR April +5.8% MoM)."
 }
