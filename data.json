@@ -1,6 +1,6 @@
 {
-  "brent": 100.21,
-  "vix": 16.59,
+  "brent": 96.62,
+  "vix": 17.09,
   "move": 78.4,
   "yield_curve": 0.43,
   "inflation_5y5y": 2.26,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.52,
   "global_liquidity": 1,
-  "dxy": 99.24,
-  "copper_gold": 1.41,
+  "dxy": 99.18,
+  "copper_gold": 1.42,
   "jobless_claims": 209,
   "ism_pmi": 52.7,
   "sofr_ois": 2,
@@ -20,7 +20,7 @@
   "building_permits": 1442,
   "trends": {
     "brent": "down",
-    "vix": "down",
+    "vix": "up",
     "move": "flat",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-05-25T18:43:01.000Z",
+  "timestamp": "2026-05-26T18:57:19.000Z",
   "sources": "Yahoo Finance"
 }
