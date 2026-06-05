@@ -1,7 +1,7 @@
 {
-  "brent": 95.35,
-  "vix": 16.5,
-  "move": 73.43,
+  "brent": 93.17,
+  "vix": 19.19,
+  "move": 71.2,
   "yield_curve": 0.39,
   "inflation_5y5y": 2.26,
   "hy_spreads": 272,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.51,
   "global_liquidity": 1,
-  "dxy": 99.54,
-  "copper_gold": 1.47,
+  "dxy": 100.04,
+  "copper_gold": 1.44,
   "jobless_claims": 225,
   "ism_pmi": 54.0,
   "sofr_ois": 2,
@@ -21,16 +21,16 @@
   "trends": {
     "brent": "down",
     "vix": "up",
-    "move": "flat",
+    "move": "down",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
     "nfci": "flat",
-    "dxy": "up",
-    "copper_gold": "flat",
-    "jobless_claims": "up",
+    "dxy": "flat",
+    "copper_gold": "down",
+    "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
     "lei_yoy": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-06-05T06:09:23.000Z",
-  "sources": "Investing/Fortune Brent (~$95.35/bbl live Jun 5; $97.95 Jun 4, $98.29 Jun 1 FRED; eased as Mideast risk premium faded); CBOE/Yahoo VIX (16.50 early Jun, +2.74%; 16.05 Jun 1 close; 52wk 13.38-35.30); Yahoo/Investing MOVE (73.43, rate vol subdued, 52wk 55.77-115.02); FRED DGS10/DGS2 (10Y ~4.48%, 2Y ~4.09% Jun 3-4 -> 10Y-2Y +0.39pp); FRED T5YIFR (5y5y fwd inflation 2.26%, anchored); FRED BAMLH0A0HYM2/GuruFocus (HY OAS 2.72%/272bp Jun 1, tight); Investing/StockQ BDTI (live ~1107, down from 2068 May 29); CME est EUR/USD 3M xccy basis ~-10bp (benign, last available); Chicago Fed NFCI -0.51 (loose, last available Jun 3 release); Composite liquidity (Fed QT slowing + ECB pause + BOJ + PBOC -> stable=1); TradingEconomics DXY (99.54 Jun 4, highest since Apr; 99.30 live); Kitco/JMBullion (Copper $6.53/lb, Gold ~$4450/oz -> ratio 1.47); DOL Initial Jobless Claims (225k wk ending May 30, +13k, 4-month high, above 215k est - Bloomberg/Reuters Jun 4); ISM Manufacturing PMI 54.0 May (released Jun 1, +1.3pt, highest since May 2022, 5th month expansion); SOFR-OIS est ~2bp (no MM stress, last available); Conference Board LEI (97.4 April +0.1% MoM, 6m -0.7%, ~-1.7% YoY; next Jun 18); FRED SAHMREALTIME (0.13 April, far below 0.5 trigger; next release Jun 5); UMich Consumer Sentiment (44.8 May final, record-low area; yr-ahead infl exp 4.8%); Census Building Permits (1442k SAAR April, +5.8% MoM; May due Jun 16)."
+  "timestamp": "2026-06-05T18:48:31.000Z",
+  "sources": "Yahoo Finance"
 }
