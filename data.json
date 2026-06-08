@@ -1,7 +1,7 @@
 {
-  "brent": 92.87,
-  "vix": 21.51,
-  "move": 73.43,
+  "brent": 94.26,
+  "vix": 18.63,
+  "move": 75.2,
   "yield_curve": 0.38,
   "inflation_5y5y": 2.26,
   "hy_spreads": 272,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.51,
   "global_liquidity": 1,
-  "dxy": 99.4,
-  "copper_gold": 1.44,
+  "dxy": 100.0,
+  "copper_gold": 1.45,
   "jobless_claims": 225,
   "ism_pmi": 54.0,
   "sofr_ois": 2,
@@ -19,9 +19,9 @@
   "consumer_sentiment": 44.8,
   "building_permits": 1442,
   "trends": {
-    "brent": "down",
-    "vix": "up",
-    "move": "flat",
+    "brent": "up",
+    "vix": "down",
+    "move": "up",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
@@ -29,7 +29,7 @@
     "bdti": "flat",
     "nfci": "flat",
     "dxy": "flat",
-    "copper_gold": "down",
+    "copper_gold": "flat",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-06-07T06:10:56.000Z",
-  "sources": "Brent crude 92.87/bbl (TradingEconomics, Jun 5, -2.27% on weak China demand; Chinese imports 10-yr low); CBOE VIX 21.51 (Jun 5 close, +39.68% spike on Iran/Strait of Hormuz risk-off, up from ~16 Jun 1); ICE MOVE 73.43 (Investing.com live, rate vol subdued); FRED 10Y-2Y +0.38pp (10Y 4.55%, 2Y 4.17% Jun 5); FRED T5YIFR 5y5y fwd 2.26% (May, anchored); ICE BofA US HY OAS 272bp (2.72%, Jun 1, near record-tight); Baltic Dirty Tanker ~1107 (StockQ, carried from Jun 5; current search only reconfirmed 2068 May 29); EUR/USD 3M xccy basis ~-10bp (carried, no fresh quote); Chicago Fed NFCI -0.51 (loose, carried; next release Jun 10); Composite liquidity stable=1 (Fed QT + firmer USD braking vs PBoC injections; global liquidity ~$187.5T); DXY ~99.4 (TradingEconomics Fri close); Copper 6.25/lb / Gold 4342.11/oz -> ratio 1.44 (both fell Fri); DOL initial jobless claims 225k wk May 30 (+13k, highest since early Feb; next Jun 11); ISM Mfg PMI 54.0 May (highest since May 2022); SOFR-OIS ~2bp (carried, no fresh quote); Conference Board LEI ~-1.7% YoY (April, LEI 97.4, 6m & 12m growth negative; next Jun 18); Sahm Rule 0.13 (April, far below 0.5); UMich Consumer Sentiment 44.8 May final (record low, 3rd straight drop on cost-of-living/Hormuz gas prices); Census building permits 1442k SAAR April. Sources: TradingEconomics, FRED, EIA, GuruFocus, StockQ, Investing.com, Chicago Fed, Kitco, JM Bullion, DOL, ISM, Conference Board, U-Michigan, US Census, CME, federalreserve.gov."
+  "timestamp": "2026-06-08T18:59:52.000Z",
+  "sources": "Yahoo Finance"
 }
