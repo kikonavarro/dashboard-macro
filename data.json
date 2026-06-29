@@ -1,7 +1,7 @@
 {
-  "brent": 72.0,
-  "vix": 18.41,
-  "move": 66.79,
+  "brent": 73.8,
+  "vix": 17.65,
+  "move": 66.8,
   "yield_curve": 0.32,
   "inflation_5y5y": 2.21,
   "hy_spreads": 278,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.53,
   "global_liquidity": 0,
-  "dxy": 101.2,
-  "copper_gold": 1.51,
+  "dxy": 101.09,
+  "copper_gold": 1.53,
   "jobless_claims": 215,
   "ism_pmi": 54.0,
   "sofr_ois": 2,
@@ -19,9 +19,9 @@
   "consumer_sentiment": 49.5,
   "building_permits": 1413,
   "trends": {
-    "brent": "flat",
-    "vix": "flat",
-    "move": "down",
+    "brent": "up",
+    "vix": "down",
+    "move": "flat",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-06-29T06:10:44.000Z",
-  "sources": "Brent ~$72/bbl (Jun 26 close $71.99, -4.34% on day; WTI $69.96 Jun 29 +1.06%; TradingEconomics/EIA/Investing.com). VIX 18.41 (Jun 26 close, opened 19.70 Jun 29; Yahoo/CBOE/TradingEconomics). MOVE 66.79 (Jun 26 close, -0.47%; Yahoo/CNBC). 10Y-2Y +0.32pp (10Y 4.39%, 2Y ~4.07%; FRED T10Y2Y). T5YIFR 5y5y fwd 2.21% (Jun 2026; FRED). ICE BofA US HY OAS 278bp (2.78% Jun 25, June avg 2.63%; FRED BAMLH0A0HYM2/govspending). Baltic Dirty Tanker 1107 carried (no fresh live print; last dated print 2068 May 29 now stale; Investing.com/MacroMicro). EUR/USD 3M xccy basis -10bp carried (no fresh print; CME/Bloomberg). Chicago Fed NFCI -0.53 carried (data thru Jun 19, value not separately published; next Jul 1; Chicago Fed/FRED). Global liquidity 0=shrinking: ECB raised key rates +25bp mid-June and APP/PEPP portfolios declining; Fed/balance-sheet runoff (ECB/FRED ECBASSETSW/MacroMicro). DXY 101.2 (Jun 29 ~101.1-101.3, eased on in-line PCE; TradingEconomics/Investing.com). Copper $6.14/lb (Jun 26) / Gold $4064/oz (Jun 29) -> ratio 1.51, up from 1.46 (TradingEconomics/JMBullion/Kitco). Initial jobless claims 215k (wk Jun 20, -12k, 4-week low; continuing claims 1.821M 3-mo high; DOL/TradingEconomics). ISM Mfg PMI 54.0 (May, latest official; June due Jul 1; S&P Global flash 55.7 Jun; ISM). SOFR-OIS ~2bp carried. Conference Board LEI 99.3 May (+0.1% MoM, 12m growth still negative ~-1.5% YoY; next Jul 20; Conference Board). Sahm Rule real-time 0.13 (Apr; next Jul 2; FRED SAHMREALTIME). UMich Consumer Sentiment 49.5 (June final, revised up from 48.9 prelim, vs 44.8 May record low; UMich/IndexBox). Census building permits 1413k SAAR (May, -0.7% MoM; Census). Sources: TradingEconomics, FRED, CBOE, Yahoo Finance, Investing.com, CNBC, EIA, Kitco, JMBullion, MacroMicro, Chicago Fed, ECB, DOL, ISM, Conference Board, U-Michigan, US Census, IndexBox."
+  "timestamp": "2026-06-29T18:50:12.000Z",
+  "sources": "Yahoo Finance"
 }
