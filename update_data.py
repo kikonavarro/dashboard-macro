@@ -46,6 +46,30 @@ def git(args: list, cwd: Path) -> str:
     return result.stdout.strip()
 
 
+def clear_stale_locks(repo_dir: Path):
+    """Remove git lock files left behind by crashed processes (>5 min old)."""
+    import time
+    for name in ("HEAD.lock", "index.lock"):
+        lock = repo_dir / ".git" / name
+        try:
+            if lock.exists() and time.time() - lock.stat().st_mtime > 300:
+                lock.unlink()
+                print(f"🔓 Removed stale lock: {name}")
+        except OSError as e:
+            print(f"⚠️  Could not remove {name}: {e}")
+
+
+def sync_with_origin(repo_dir: Path):
+    """Discard any local data.json changes and fast-forward to origin/main.
+    Safe because data.json is fully regenerated on every run."""
+    clear_stale_locks(repo_dir)
+    try:
+        git(["checkout", "--", "data.json"], repo_dir)
+        git(["pull", "--rebase", "--autostash", "origin", "main"], repo_dir)
+    except RuntimeError as e:
+        print(f"⚠️  Sync with origin failed (continuing): {e}")
+
+
 def commit_and_push(repo_dir: Path, timestamp: str):
     date_str = timestamp[:10]  # YYYY-MM-DD
     git(["add", "data.json"], repo_dir)
@@ -99,6 +123,9 @@ def main():
     # Ensure timestamp
     if "timestamp" not in data:
         data["timestamp"] = datetime.now(timezone.utc).isoformat()
+
+    # Sync with origin before writing (clears stale locks, fast-forwards)
+    sync_with_origin(REPO_DIR)
 
     # Write data.json
     DATA_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
