@@ -1,7 +1,7 @@
 {
-  "brent": 98.61,
-  "vix": 14.21,
-  "move": 78.6,
+  "brent": 98.36,
+  "vix": 15.18,
+  "move": 95.5,
   "yield_curve": 0.25,
   "inflation_5y5y": 2.34,
   "hy_spreads": 268,
@@ -9,7 +9,7 @@
   "xccy_basis": -10,
   "nfci": -0.56,
   "global_liquidity": 1,
-  "dxy": 100.54,
+  "dxy": 101.13,
   "copper_gold": 1.57,
   "jobless_claims": 196,
   "ism_pmi": 54.6,
@@ -19,17 +19,17 @@
   "consumer_sentiment": 47.8,
   "building_permits": 1394,
   "trends": {
-    "brent": "down",
-    "vix": "down",
-    "move": "down",
-    "yield_curve": "up",
+    "brent": "flat",
+    "vix": "up",
+    "move": "up",
+    "yield_curve": "flat",
     "inflation_5y5y": "flat",
-    "hy_spreads": "down",
+    "hy_spreads": "flat",
     "xccy_basis": "flat",
     "bdti": "flat",
     "nfci": "flat",
-    "dxy": "up",
-    "copper_gold": "up",
+    "dxy": "flat",
+    "copper_gold": "flat",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-09-23T06:16:29.000Z",
-  "sources": "WEDNESDAY Sep 23 2026 RUN. HEADLINE: the curve backed away from the brink. 2s10s widened 5bp to 0.25 from 0.20 (24/7 Wall St macro release), reversing Tuesday's flattest print of 2026, with the 10y holding near 4.95-4.97 pct. The rest of the risk complex eased with it. VIX 14.21 (Sep 22 close, -4.4 pct, a 21-session low, down from 16.20 - confirmed by both the Yahoo Finance auto-run and press reports). HY OAS 268bp (FRED BAMLH0A0HYM2, Sep 18, in from 276). MOVE 78.6 (Yahoo auto-run; mid-September vendor prints 77.9-80.6). Brent 98.61 on a fifth consecutive down session (TradingEconomics/Yahoo Sep 22, approx -1.9 pct d/d, futures near 98 on Sep 23) as credible US-Iran diplomacy unwinds the geopolitical premium that peaked at 130.80 on Sep 15 - the first sustained sub-100 handle since the spike. DXY 100.54 (Sep 22 close, +0.11 pct, highest in 21 sessions) with the Fed hiking. Copper 6.70 USD/lb (sixth straight gain) over gold 4,307.63 USD/oz gives copper/gold 1.57, up from 1.54 - mildly pro-cyclical. 5y5y breakevens 2.34 (FRED T5YIFR, Sep 17), essentially unchanged. NFCI DATA FLAG: the Sep 23 release (week ending Sep 18) was due 08:30 ET but no numeric print could be retrieved - the Chicago Fed page renders client-side and FRED had not propagated at run time. CARRIED at -0.56 (week ending Sep 11), the loosest of the cycle. BDTI DATA FLAG: carried at 4,899 for a THIRD consecutive run with no dated Baltic print located; vendors remain irreconcilable (Investing.com approx 1,107; MacroMicro 2,068 in May 2026). The Baltic Exchange weekly report for Sep 4 does show VLCC TD3C at WS677.22 with round-trip TCE near 704,000 USD/day and TD15 at WS236.88 - an extraordinarily strong dirty tanker market, at least directionally consistent with a very elevated index. Treat the exact level as LOW CONFIDENCE. CARRIED with no fresh prints: initial claims 196k (week ending Sep 12; next release Thu Sep 24), ISM manufacturing 54.6 (August), UMich consumer sentiment 47.8 (September preliminary; final Sep 25), building permits 1,394k (August), LEI y/y approx -0.7 pct (August), Sahm rule -0.07, SOFR-OIS 0bp and EUR/USD 3M xccy basis -10bp (both standing assumptions, no free live source), global liquidity 1 (stable). NOTE: this run was committed via git plumbing because stale HEAD.lock and index.lock files in .git could not be removed from the sandbox (read-only mount permissions); the commit was built on the remote tip e5e4afb. PICTURE: a broad easing across the risk complex - vol down, credit tighter, oil below 100, curve steeper - which removes the immediate inversion scare but changes nothing structural. The soft spots are unchanged and entirely domestic: UMich 47.8 near record lows, LEI negative y/y, permits falling, and a Fed hiking into that. WATCH: claims (Sep 24), UMich final September (Sep 25), ISM (Oct 1), whether Brent stabilises below 100, and whether the 2s10s steepening holds or resumes flattening toward zero. SOURCES: FRED/St. Louis Fed (T10Y2Y, T5YIFR, VIXCLS, BAMLH0A0HYM2, NFCI, ICSA, SAHMREALTIME, PERMIT, UMCSENT), Chicago Fed, TradingEconomics, Yahoo Finance, Investing.com, 24/7 Wall St, MacroMicro (MOVE, BDTI), Baltic Exchange weekly report, Cboe, CNBC, Fortune, Rabofund, Ticker Daily, Schwab, US Department of Labor, Conference Board, ISM, University of Michigan Surveys of Consumers, Census Bureau/HUD."
+  "timestamp": "2026-09-23T21:21:12.000Z",
+  "sources": "Yahoo Finance"
 }
