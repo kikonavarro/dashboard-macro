@@ -1,6 +1,6 @@
 {
-  "brent": 104.43,
-  "vix": 14.84,
+  "brent": 105.76,
+  "vix": 15.21,
   "move": 98.5,
   "yield_curve": 0.47,
   "inflation_5y5y": 2.35,
@@ -9,8 +9,8 @@
   "xccy_basis": -10,
   "nfci": -0.55,
   "global_liquidity": 1,
-  "dxy": 102.23,
-  "copper_gold": 1.59,
+  "dxy": 102.55,
+  "copper_gold": 1.61,
   "jobless_claims": 197,
   "ism_pmi": 54.5,
   "sofr_ois": 0,
@@ -19,9 +19,9 @@
   "consumer_sentiment": 48.1,
   "building_permits": 1403,
   "trends": {
-    "brent": "flat",
-    "vix": "down",
-    "move": "down",
+    "brent": "up",
+    "vix": "up",
+    "move": "flat",
     "yield_curve": "flat",
     "inflation_5y5y": "flat",
     "hy_spreads": "flat",
@@ -29,7 +29,7 @@
     "bdti": "flat",
     "nfci": "flat",
     "dxy": "flat",
-    "copper_gold": "flat",
+    "copper_gold": "up",
     "jobless_claims": "flat",
     "ism_pmi": "flat",
     "sofr_ois": "flat",
@@ -38,6 +38,6 @@
     "consumer_sentiment": "flat",
     "building_permits": "flat"
   },
-  "timestamp": "2026-10-09T22:29:13.000Z",
+  "timestamp": "2026-10-13T00:26:36.000Z",
   "sources": "Yahoo Finance"
 }
