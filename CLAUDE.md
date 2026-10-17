@@ -8,7 +8,7 @@ El proyecto vive en: `https://github.com/kikonavarro/macro-dashboard`
 URL pública (GitHub Pages): `https://kikonavarro.github.io/macro-dashboard/`
 
 **Ruta local en el Mac:** `/Users/franciscojaviernavarro/Documents/Claude_Projects/Dashboard Macro`
-**Remote git:** `https://[token]@github.com/kikonavarro/dashboard-macro.git` (HTTPS con token, configurado — git push funciona directamente desde Cowork)
+**Remote git:** HTTPS con fine-grained token (solo este repo, Contents read/write, caduca en 1 año). git push funciona desde Cowork. El GitHub Action está desactivado desde la web de GitHub: el único que escribe data.json es la tarea programada de Cowork.
 
 ---
 

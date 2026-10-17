@@ -40,7 +40,6 @@ const UI = {
       move: { name: 'MOVE Index', cat: 'Volatilidad bonos', labs: ['bonos estables', 'tensión en tipos', 'estrés severo', 'pánico de tipos'] },
       crv: { name: 'Curva tipos 10Y – 2Y', cat: 'Tipos de interés', labs: ['expansión', 'alerta de inversión', 'recesión probable'] },
       inf: { name: 'Inflación 5y5y', cat: 'Expectativas inflación', labs: ['estable', 'presión inflacionaria', 'riesgo estanflación'] },
-      bdt: { name: 'Baltic Dirty Tanker', cat: 'Comercio petróleo', labs: ['comercio fluido', 'tensión en rutas', 'disrupción seria', 'crisis suministro'] },
       hy: { name: 'HY Credit Spreads', cat: 'Crédito', labs: ['normal', 'tensión crediticia', 'riesgo de crisis', 'crisis crediticia'] },
       xccy: { name: 'Cross-Currency Basis', cat: 'Estrés dólar', labs: ['liquidez normal', 'tensión en dólares', 'estrés severo', 'crisis de liquidez'] },
       fci: { name: 'Chicago Fed NFCI', cat: 'Condiciones financieras', labs: ['condiciones laxas', 'neutras', 'restrictivas', 'estrés financiero'] },
@@ -90,7 +89,6 @@ const UI = {
       move: { name: 'MOVE Index', cat: 'Bond volatility', labs: ['stable bonds', 'rate tension', 'severe stress', 'rate panic'] },
       crv: { name: 'Yield Curve 10Y – 2Y', cat: 'US interest rates', labs: ['expansion', 'inversion alert', 'recession likely'] },
       inf: { name: '5y5y Inflation', cat: 'Inflation expectations', labs: ['stable', 'inflationary pressure', 'stagflation risk'] },
-      bdt: { name: 'Baltic Dirty Tanker', cat: 'Oil trade', labs: ['smooth trade', 'route tension', 'serious disruption', 'supply crisis'] },
       hy: { name: 'HY Credit Spreads', cat: 'Credit stress', labs: ['normal', 'credit tension', 'crisis risk', 'credit crisis'] },
       xccy: { name: 'Cross-Currency Basis', cat: 'Dollar liquidity', labs: ['normal liquidity', 'dollar tension', 'severe stress', 'liquidity crisis'] },
       fci: { name: 'Chicago Fed NFCI', cat: 'Financial conditions', labs: ['loose conditions', 'neutral', 'restrictive', 'financial stress'] },
@@ -139,7 +137,7 @@ let sparkHistory = JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}');
 const CATEGORIES = {
   markets: ['vix', 'move', 'hy', 'fci', 'sofr'],
   rates: ['crv', 'inf', 'liq'],
-  energy: ['oil', 'bdt', 'dxy'],
+  energy: ['oil', 'dxy'],
   economy: ['ism', 'claims', 'lei', 'permits', 'umcs'],
   confirm: ['sahm', 'cg', 'xccy']
 };
@@ -151,7 +149,6 @@ const INDS = [
   { id: 'move', pre: '', suf: '', min: 50, max: 250, val: 91, th: [90, 130, 175], step: 1, inv: false, key: 'move', w: 2 },
   { id: 'crv', pre: '', suf: '%', min: -1.5, max: 0.8, val: -0.2, th: [0, -0.5], step: 0.05, inv: true, key: 'yield_curve', w: 3 },
   { id: 'inf', pre: '', suf: '%', min: 1.5, max: 3.5, val: 2.45, th: [2.3, 2.7], step: 0.05, inv: false, key: 'inflation_5y5y', w: 2 },
-  { id: 'bdt', pre: '', suf: ' pts', min: 400, max: 3500, val: 1000, th: [1200, 1600, 2000], step: 10, inv: false, key: 'bdti', w: 1 },
   { id: 'hy', pre: '', suf: ' bps', min: 200, max: 1200, val: 309, th: [350, 500, 800], step: 5, inv: false, key: 'hy_spreads', w: 3 },
   { id: 'xccy', pre: '', suf: ' bps', min: -120, max: 20, val: -12, th: [-15, -25, -50], step: 1, inv: true, key: 'xccy_basis', w: 1 },
   { id: 'fci', pre: '', suf: '', min: -1.0, max: 2.0, val: 0.0, th: [-0.25, 0.25, 0.70], step: 0.01, inv: false, key: 'nfci', w: 3 },
@@ -627,7 +624,7 @@ async function fetchData() {
   setRefreshBtn(true); setStatus(true, ui('searching')); setError('');
   const today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
   const prompt = `Today is ${today}. Search the web for the latest values of these financial market indicators. Return ONLY a valid JSON object (no markdown, no explanation, no code blocks):
-{"brent":<number USD/barrel>,"vix":<number>,"move":<number MOVE index points>,"yield_curve":<number 10Y minus 2Y spread in %>,"inflation_5y5y":<number 5y5y forward rate in %>,"hy_spreads":<number ICE BofA HY OAS in bps>,"bdti":<number Baltic Dirty Tanker Index absolute points>,"xccy_basis":<number EUR/USD cross-currency basis in bps negative>,"nfci":<number Chicago Fed NFCI weekly index>,"global_liquidity":<0=growing,1=stable,2=falling based on Fed+ECB+PBOC+BOJ balance sheets>,"dxy":<number US Dollar Index DXY>,"copper_gold":<number copper $/lb divided by gold $/oz multiplied by 1000>,"jobless_claims":<number US initial jobless claims in thousands>,"ism_pmi":<number ISM Manufacturing PMI>,"sofr_ois":<number SOFR minus OIS/EFFR spread in bps>,"lei_yoy":<number Conference Board LEI year-over-year % change>,"sahm_rule":<number Sahm Rule recession indicator in percentage points>,"consumer_sentiment":<number University of Michigan Consumer Sentiment Index>,"building_permits":<number US building permits SAAR in thousands>,"trends":{"brent":"up|down|flat","vix":"up|down|flat","move":"up|down|flat","yield_curve":"up|down|flat","hy_spreads":"up|down|flat","xccy_basis":"up|down|flat","bdti":"up|down|flat","nfci":"up|down|flat","dxy":"up|down|flat","copper_gold":"up|down|flat","jobless_claims":"up|down|flat","ism_pmi":"up|down|flat","sofr_ois":"up|down|flat","lei_yoy":"up|down|flat","sahm_rule":"up|down|flat","consumer_sentiment":"up|down|flat","building_permits":"up|down|flat"},"timestamp":"<date>","sources":"<sources>"}`;
+{"brent":<number USD/barrel>,"vix":<number>,"move":<number MOVE index points>,"yield_curve":<number 10Y minus 2Y spread in %>,"inflation_5y5y":<number 5y5y forward rate in %>,"hy_spreads":<number ICE BofA HY OAS in bps>,"xccy_basis":<number EUR/USD cross-currency basis in bps negative>,"nfci":<number Chicago Fed NFCI weekly index>,"global_liquidity":<0=growing,1=stable,2=falling based on Fed+ECB+PBOC+BOJ balance sheets>,"dxy":<number US Dollar Index DXY>,"copper_gold":<number copper $/lb divided by gold $/oz multiplied by 1000>,"jobless_claims":<number US initial jobless claims in thousands>,"ism_pmi":<number ISM Manufacturing PMI>,"sofr_ois":<number SOFR minus OIS/EFFR spread in bps>,"lei_yoy":<number Conference Board LEI year-over-year % change>,"sahm_rule":<number Sahm Rule recession indicator in percentage points>,"consumer_sentiment":<number University of Michigan Consumer Sentiment Index>,"building_permits":<number US building permits SAAR in thousands>,"trends":{"brent":"up|down|flat","vix":"up|down|flat","move":"up|down|flat","yield_curve":"up|down|flat","hy_spreads":"up|down|flat","xccy_basis":"up|down|flat","nfci":"up|down|flat","dxy":"up|down|flat","copper_gold":"up|down|flat","jobless_claims":"up|down|flat","ism_pmi":"up|down|flat","sofr_ois":"up|down|flat","lei_yoy":"up|down|flat","sahm_rule":"up|down|flat","consumer_sentiment":"up|down|flat","building_permits":"up|down|flat"},"timestamp":"<date>","sources":"<sources>"}`;
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',

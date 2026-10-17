@@ -26,7 +26,7 @@ DATA_FILE = REPO_DIR / "data.json"
 
 REQUIRED_KEYS = [
     "brent", "vix", "move", "yield_curve", "inflation_5y5y",
-    "hy_spreads", "bdti", "xccy_basis", "nfci", "global_liquidity",
+    "hy_spreads", "xccy_basis", "nfci", "global_liquidity",
     "dxy", "copper_gold", "jobless_claims", "ism_pmi", "sofr_ois",
     "trends", "timestamp", "sources"
 ]

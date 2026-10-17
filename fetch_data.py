@@ -199,9 +199,6 @@ def fetch_all() -> dict:
     else:
         data["hy_spreads"] = prev.get("hy_spreads", 0)
 
-    # BDTI — not available from free APIs, keep previous value
-    data["bdti"] = prev.get("bdti", 0)
-    print("  ℹ️  BDTI: kept previous value (no free API)")
 
     # Cross-currency basis — not available from free APIs, keep previous
     data["xccy_basis"] = prev.get("xccy_basis", 0)
@@ -262,7 +259,7 @@ def fetch_all() -> dict:
     # --- Trends ---
     trend_keys = [
         "brent", "vix", "move", "yield_curve", "inflation_5y5y",
-        "hy_spreads", "xccy_basis", "bdti", "nfci", "dxy",
+        "hy_spreads", "xccy_basis", "nfci", "dxy",
         "copper_gold", "jobless_claims", "ism_pmi", "sofr_ois"
     ]
     for k in trend_keys:
