@@ -1,0 +1,1038 @@
+<!doctype html>
+<html
+  lang="es"
+  data-resolution="portrait"
+  data-composition-variables='[{"id":"url","type":"string","label":"URL final","default":"github.com/kikonavarro/dashboard-macro"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "DM Sans";
+        src: url("assets/fonts/dm-sans-latin-wght-normal.woff2") format("woff2");
+        font-weight: 100 1000;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+        font-weight: 100 800;
+      }
+      @font-face {
+        font-family: "Anton";
+        src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+        font-weight: 400;
+      }
+      :root {
+        --void: #08090c;
+        --surface: #111318;
+        --elevated: #181c24;
+        --green: #3eff8b;
+        --amber: #ffbc42;
+        --orange: #ff6b35;
+        --red: #ff3860;
+        --cyan: #2be4f0;
+        --violet: #8b5cf6;
+        --ink: #e8ecf1;
+        --ink2: #8f99a8;
+        --line: rgba(255, 255, 255, 0.08);
+        --display: "Anton", "DM Sans", sans-serif;
+        --body: "DM Sans", sans-serif;
+        --mono: "JetBrains Mono", monospace;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--void);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--void);
+        color: var(--ink);
+        font-family: var(--body);
+      }
+      .clip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+      }
+      .inner {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* ── persistent background ── */
+      #grid {
+        position: absolute;
+        inset: -200px;
+        background-image:
+          linear-gradient(rgba(43, 228, 240, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(43, 228, 240, 0.07) 1px, transparent 1px);
+        background-size: 90px 90px;
+      }
+      #glow {
+        position: absolute;
+        left: -260px;
+        top: 260px;
+        width: 1600px;
+        height: 1400px;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgba(43, 228, 240, 0.16), rgba(43, 228, 240, 0) 70%);
+      }
+      #glow2 {
+        position: absolute;
+        left: -260px;
+        top: 260px;
+        width: 1600px;
+        height: 1400px;
+        border-radius: 50%;
+        opacity: 0;
+      }
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at center, rgba(8, 9, 12, 0) 45%, rgba(8, 9, 12, 0.92) 100%);
+      }
+      #scan {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 6px);
+      }
+      #flash {
+        background: #fff;
+        opacity: 0;
+      }
+      #hud {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 112px;
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--mono);
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 3px;
+        color: var(--ink2);
+      }
+      #hud b {
+        color: var(--red);
+      }
+
+      /* ── S1 hook ── */
+      .slam {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        font-family: var(--display);
+        text-transform: uppercase;
+        line-height: 0.95;
+        letter-spacing: 1px;
+      }
+      #h1a {
+        top: 580px;
+        font-size: 150px;
+        white-space: nowrap;
+      }
+      #h1b {
+        top: 740px;
+        font-size: 214px;
+        white-space: nowrap;
+      }
+      #h2wrap {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 620px;
+        height: 620px;
+      }
+      .glitch {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-family: var(--display);
+        text-transform: uppercase;
+        line-height: 0.92;
+        font-size: 300px;
+        white-space: nowrap;
+      }
+      .glitch .sm {
+        font-size: 252px;
+        display: block;
+        margin-top: 44px;
+      }
+      #g-main {
+        color: var(--green);
+        text-shadow: 0 0 60px rgba(62, 255, 139, 0.55);
+      }
+      #g-c {
+        color: var(--cyan);
+        mix-blend-mode: screen;
+        opacity: 0.8;
+      }
+      #g-r {
+        color: var(--red);
+        mix-blend-mode: screen;
+        opacity: 0.8;
+      }
+      #ecg {
+        position: absolute;
+        left: 0;
+        top: 1180px;
+        width: 1080px;
+        height: 420px;
+      }
+
+      /* ── S2 storm ── */
+      .ticker {
+        position: absolute;
+        left: 0;
+        white-space: nowrap;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 64px;
+        color: rgba(232, 236, 241, 0.09);
+      }
+      .flashcard {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 560px;
+        opacity: 0;
+      }
+      .flashcard .idx {
+        font-family: var(--mono);
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: 4px;
+        color: var(--cyan);
+      }
+      .flashcard .nm {
+        font-family: var(--display);
+        font-size: 120px;
+        text-transform: uppercase;
+        line-height: 1;
+        margin-top: 18px;
+      }
+      .flashcard .vl {
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: 216px;
+        line-height: 1.05;
+        letter-spacing: -8px;
+        margin-top: 10px;
+        white-space: nowrap;
+      }
+      .flashcard .vl small {
+        font-size: 80px;
+        letter-spacing: 0;
+        margin-left: 14px;
+      }
+      .flashcard .bar {
+        height: 16px;
+        margin-top: 26px;
+        border-radius: 8px;
+        transform-origin: left center;
+      }
+
+      /* ── S3 grid ── */
+      #s3head {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 200px;
+        display: flex;
+        align-items: flex-end;
+        gap: 28px;
+      }
+      #s3num {
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: 210px;
+        line-height: 0.9;
+        color: var(--cyan);
+        letter-spacing: -8px;
+        text-shadow: 0 0 60px rgba(43, 228, 240, 0.5);
+      }
+      #s3txt {
+        font-family: var(--display);
+        font-size: 84px;
+        line-height: 1;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+      }
+      #cards {
+        position: absolute;
+        left: 50px;
+        top: 440px;
+        width: 980px;
+        display: grid;
+        grid-template-columns: repeat(3, 316px);
+        gap: 14px 16px;
+      }
+      .card {
+        height: 170px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .card .cn {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--ink2);
+        white-space: nowrap;
+      }
+      .card .cv {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 44px;
+        margin-top: 6px;
+        white-space: nowrap;
+      }
+      .card .segs {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        display: flex;
+        gap: 6px;
+      }
+      .card .seg {
+        flex: 1;
+        height: 10px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .card .halo {
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        opacity: 0;
+      }
+      #s3sub {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 1570px;
+        font-family: var(--display);
+        font-size: 92px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      #s3sub span {
+        color: var(--cyan);
+      }
+
+      /* ── S4 heroes ── */
+      #s4title {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 230px;
+        font-family: var(--display);
+        font-size: 104px;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+      #s4title span {
+        color: var(--amber);
+      }
+      .hero {
+        position: absolute;
+        left: 60px;
+        top: 520px;
+        width: 960px;
+        height: 980px;
+        background: linear-gradient(160deg, #181c24, #0d0f14);
+        border: 2px solid var(--line);
+        border-radius: 36px;
+        padding: 56px 56px;
+        opacity: 0;
+      }
+      .hero .cat {
+        font-family: var(--mono);
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--ink2);
+      }
+      .hero .nm {
+        font-size: 78px;
+        font-weight: 800;
+        line-height: 1.05;
+        margin-top: 14px;
+        letter-spacing: -1px;
+      }
+      .hero .vl {
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: 210px;
+        letter-spacing: -8px;
+        line-height: 1.1;
+        margin-top: 40px;
+        white-space: nowrap;
+      }
+      .hero .tr {
+        font-family: var(--mono);
+        font-size: 34px;
+        font-weight: 600;
+        color: var(--ink2);
+        margin-top: 4px;
+      }
+      .hero .lights {
+        position: absolute;
+        left: 56px;
+        right: 56px;
+        bottom: 190px;
+        display: flex;
+        gap: 18px;
+      }
+      .hero .light {
+        flex: 1;
+        height: 34px;
+        border-radius: 17px;
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .hero .lab {
+        position: absolute;
+        left: 56px;
+        right: 56px;
+        bottom: 70px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-size: 58px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+      .hero .dot {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        flex: none;
+      }
+      .hero .edge {
+        position: absolute;
+        inset: -2px;
+        border-radius: 36px;
+        border: 4px solid transparent;
+        opacity: 0;
+      }
+
+      /* ── S5 gauge ── */
+      #s5q {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 230px;
+        font-family: var(--display);
+        font-size: 100px;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+      #s5q span {
+        color: var(--cyan);
+      }
+      #gauge {
+        position: absolute;
+        left: 0;
+        top: 520px;
+        width: 1080px;
+        height: 620px;
+      }
+      #scan5 {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1130px;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: 6px;
+        color: var(--ink2);
+      }
+      #score {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1100px;
+        text-align: center;
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: 120px;
+        letter-spacing: -6px;
+        color: var(--amber);
+        opacity: 0;
+      }
+      #score small {
+        font-size: 50px;
+        letter-spacing: 0;
+        color: var(--ink2);
+      }
+      #verdict {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 1270px;
+        white-space: nowrap;
+        text-align: center;
+        font-family: var(--display);
+        font-size: 134px;
+        line-height: 0.95;
+        text-transform: uppercase;
+        color: var(--amber);
+        text-shadow: 0 0 80px rgba(255, 188, 66, 0.55);
+        opacity: 0;
+      }
+      #vsub {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 1440px;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 38px;
+        font-weight: 600;
+        color: var(--ink);
+        opacity: 0;
+      }
+      #dots {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1520px;
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+      }
+      #dots i {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: block;
+      }
+
+      /* ── S6 CTA ── */
+      #logo {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 470px;
+        text-align: center;
+        font-family: var(--display);
+        text-transform: uppercase;
+        line-height: 0.94;
+      }
+      #logo .l1 {
+        white-space: nowrap;
+        font-size: 200px;
+        display: block;
+      }
+      #logo .l2 {
+        font-size: 212px;
+        display: block;
+        background: linear-gradient(90deg, var(--cyan), var(--green));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      #logoline {
+        position: absolute;
+        left: 240px;
+        top: 950px;
+        width: 600px;
+        height: 8px;
+        border-radius: 4px;
+        background: linear-gradient(90deg, var(--green), var(--amber), var(--orange), var(--red));
+        transform-origin: center;
+      }
+      #tag {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 1000px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      #chips {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 1150px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 22px;
+      }
+      .chip {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 44px;
+        letter-spacing: 2px;
+        padding: 22px 38px;
+        border-radius: 60px;
+        border: 3px solid var(--green);
+        color: var(--green);
+        background: rgba(62, 255, 139, 0.08);
+        white-space: nowrap;
+      }
+      #urlbox {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 1440px;
+        text-align: center;
+      }
+      #urlbox .cta {
+        font-family: var(--display);
+        font-size: 76px;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      #url {
+        display: inline-block;
+        margin-top: 22px;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 36px;
+        color: var(--void);
+        background: var(--cyan);
+        padding: 20px 30px;
+        border-radius: 14px;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="32" data-width="1080" data-height="1920">
+      <!-- persistent background -->
+      <div id="bg" class="clip" data-start="0" data-duration="32" data-track-index="0">
+        <div id="grid"></div>
+        <div id="glow"></div>
+        <div id="glow2"></div>
+        <div id="vignette" data-layout-ignore></div>
+      </div>
+
+      <!-- S1 · hook -->
+      <div id="s1" class="clip" data-start="0" data-duration="4" data-track-index="1">
+        <div class="inner" id="s1i">
+          <svg id="ecg" viewBox="0 0 1080 420" fill="none">
+            <path id="ecgp" stroke="#3eff8b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          </svg>
+          <div id="s1a">
+            <div id="h1a" class="slam">Los mercados</div>
+            <div id="h1b" class="slam">no avisan.</div>
+          </div>
+          <div id="h2wrap">
+            <div class="glitch" id="g-c" data-layout-ignore>Dejan<span class="sm">señales.</span></div>
+            <div class="glitch" id="g-r" data-layout-ignore>Dejan<span class="sm">señales.</span></div>
+            <div class="glitch" id="g-main">Dejan<span class="sm">señales.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2 · number storm -->
+      <div id="s2" class="clip" data-start="4" data-duration="4" data-track-index="1">
+        <div class="inner" id="s2i">
+          <div id="tickers"></div>
+          <div id="flashes"></div>
+        </div>
+      </div>
+
+      <!-- S3 · grid -->
+      <div id="s3" class="clip" data-start="8" data-duration="6" data-track-index="1">
+        <div class="inner" id="s3i">
+          <div id="s3head">
+            <div id="s3num">0</div>
+            <div id="s3txt">indicadores<br />macro</div>
+          </div>
+          <div id="cards"></div>
+          <div id="s3sub">En <span>una sola</span> pantalla</div>
+        </div>
+      </div>
+
+      <!-- S4 · heroes -->
+      <div id="s4" class="clip" data-start="14" data-duration="6" data-track-index="1">
+        <div class="inner" id="s4i">
+          <div id="s4title">Cada dato,<br />con su <span>semáforo</span></div>
+          <div id="heroes"></div>
+        </div>
+      </div>
+
+      <!-- S5 · gauge -->
+      <div id="s5" class="clip" data-start="20" data-duration="6" data-track-index="1">
+        <div class="inner" id="s5i">
+          <div id="s5q">¿Cuánto riesgo<br />de recesión<br /><span>hay hoy?</span></div>
+          <svg id="gauge" viewBox="0 0 1080 620" fill="none">
+            <g id="garcs" stroke-width="54" stroke-linecap="butt"></g>
+            <g id="gticks" stroke="#08090c" stroke-width="8"></g>
+            <g id="needle">
+              <path d="M540 540 L170 540" stroke="#e8ecf1" stroke-width="12" stroke-linecap="round" />
+              <circle cx="540" cy="540" r="30" fill="#e8ecf1" />
+              <circle cx="540" cy="540" r="12" fill="#08090c" />
+            </g>
+          </svg>
+          <div id="scan5">ANALIZANDO 18 SEÑALES…</div>
+          <div id="score"><span id="scorev">0.38</span><small> / 3</small></div>
+          <div id="verdict">Riesgo moderado</div>
+          <div id="vsub">6 de 18 señales en alerta</div>
+          <div id="dots"></div>
+        </div>
+      </div>
+
+      <!-- S6 · CTA -->
+      <div id="s6" class="clip" data-start="26" data-duration="6" data-track-index="1">
+        <div class="inner" id="s6i">
+          <div id="logo"><span class="l1">Macro Risk</span><span class="l2">Dashboard</span></div>
+          <div id="logoline"></div>
+          <div id="tag">18 indicadores. Una respuesta.</div>
+          <div id="chips">
+            <div class="chip">GRATIS</div>
+            <div class="chip">ABIERTO</div>
+            <div class="chip">ACTUALIZADO CADA DÍA</div>
+          </div>
+          <div id="urlbox">
+            <div class="cta">Míralo ahora</div>
+            <div id="url"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- overlays -->
+      <div id="fx" class="clip" data-start="0" data-duration="32" data-track-index="2">
+        <div id="scan"></div>
+        <div id="hud"><span><b>●</b> MACRO RISK MONITOR</span><span id="hudr">DATOS · 25 OCT 2026</span></div>
+      </div>
+      <div id="flash" class="clip" data-start="0" data-duration="32" data-track-index="3"></div>
+
+      <!-- sound -->
+      <audio id="music" data-start="0" data-duration="32" data-track-index="4" data-volume="0.62" src="assets/audio/music.wav"></audio>
+      <audio id="vo1" data-start="0.6" data-duration="2.34" data-track-index="5" data-volume="1.25" src="assets/audio/vo1_m.wav"></audio>
+      <audio id="vo2" data-start="4.3" data-duration="2.28" data-track-index="5" data-volume="1.25" src="assets/audio/vo2_m.wav"></audio>
+      <audio id="vo3" data-start="8.5" data-duration="3.0" data-track-index="5" data-volume="1.25" src="assets/audio/vo3_m.wav"></audio>
+      <audio id="vo4" data-start="14.5" data-duration="1.68" data-track-index="5" data-volume="1.25" src="assets/audio/vo4_m.wav"></audio>
+      <audio id="vo5" data-start="20.3" data-duration="3.26" data-track-index="5" data-volume="1.25" src="assets/audio/vo5_m.wav"></audio>
+      <audio id="vo6" data-start="26.6" data-duration="3.79" data-track-index="5" data-volume="1.25" src="assets/audio/vo6_m.wav"></audio>
+    </div>
+
+    <script>
+      /* Real values from data.json (2026-10-25), signal levels from the dashboard's own thresholds. */
+      const COL = ["#3eff8b", "#ffbc42", "#ff6b35", "#ff3860"];
+      const INDS = [
+        ["Petróleo Brent", "$117", 2, 4],
+        ["VIX", "19.4", 0, 4],
+        ["MOVE Index", "103", 1, 4],
+        ["Curva 10Y–2Y", "0.31%", 0, 3],
+        ["Inflación 5y5y", "2.20%", 0, 3],
+        ["HY Spreads", "340 bps", 0, 4],
+        ["X-Ccy Basis", "-10 bps", 0, 4],
+        ["NFCI Chicago", "-0.50", 0, 4],
+        ["Índice Dólar", "101.8", 1, 4],
+        ["Cobre / Oro", "1.62", 1, 4],
+        ["Paro semanal", "194K", 0, 4],
+        ["ISM Manufact.", "54.5", 0, 4],
+        ["SOFR-OIS", "0.0 bps", 0, 4],
+        ["LEI", "1.2%", 0, 4],
+        ["Regla de Sahm", "0.00 pp", 0, 4],
+        ["Confianza cons.", "48.0", 3, 4],
+        ["Permisos obra", "1400K", 0, 4],
+        ["Liquidez global", "estable", 1, 3],
+      ];
+      const FLASH = [
+        ["Petróleo", "$116.72", "", 2],
+        ["VIX", "19.45", "", 0],
+        ["Crédito HY", "340", "bps", 0],
+        ["Paro EE. UU.", "194", "K", 0],
+        ["Curva 10Y–2Y", "0.31", "%", 0],
+        ["MOVE", "103.31", "", 1],
+        ["ISM", "54.5", "", 0],
+        ["Dólar DXY", "101.75", "", 1],
+      ];
+      const HEROES = [
+        { cat: "Tipos de interés", nm: "Curva 10Y – 2Y", v: 0.31, dec: 2, pre: "", suf: "%", sig: 0, n: 3, lab: "expansión", tr: "↓ baja vs semana anterior" },
+        { cat: "Shock energético", nm: "Petróleo Brent", v: 116.72, dec: 2, pre: "$", suf: "", sig: 2, n: 4, lab: "riesgo desaceleración", tr: "↑ sube vs semana anterior" },
+        { cat: "Sentimiento", nm: "Confianza consumidor", v: 48.0, dec: 1, pre: "", suf: "", sig: 3, n: 4, lab: "pánico consumidor", tr: "→ sin cambios vs semana anterior" },
+      ];
+      const SCORE = 0.38;
+      const $ = (s) => document.querySelector(s);
+      const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+      $("#url").textContent = vars.url || "github.com/kikonavarro/dashboard-macro";
+
+      /* deterministic pseudo-random */
+      let seed = 42;
+      const rnd = () => ((seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296);
+
+      /* ── build DOM ── */
+      // ecg path
+      (() => {
+        let d = "M0 300";
+        let y = 300;
+        for (let x = 20; x <= 1080; x += 20) {
+          const spike = x === 420 || x === 760 ? -230 : x === 440 || x === 780 ? 110 : 0;
+          y = Math.max(60, Math.min(380, y + (rnd() - 0.56) * 46));
+          d += ` L${x} ${y + spike}`;
+        }
+        $("#ecgp").setAttribute("d", d);
+      })();
+      // tickers
+      const tickText = INDS.map((i) => `${i[0].toUpperCase()} ${i[1]}`).join("  ·  ");
+      for (let r = 0; r < 12; r++) {
+        const el = document.createElement("div");
+        el.className = "ticker";
+        el.setAttribute("data-layout-ignore", "");
+        el.setAttribute("data-layout-allow-overflow", "");
+        el.style.top = 240 + r * 122 + "px";
+        const off = Math.floor(rnd() * tickText.length);
+        el.textContent = (tickText.slice(off) + "  ·  " + tickText + "  ·  " + tickText).slice(0, 220);
+        $("#tickers").appendChild(el);
+      }
+      // flashes
+      FLASH.forEach((f, i) => {
+        const el = document.createElement("div");
+        el.className = "flashcard";
+        el.innerHTML = `<div class="idx">${String(i + 1).padStart(2, "0")} / 18</div><div class="nm">${f[0]}</div><div class="vl" style="color:${COL[f[3]]}">${f[1]}<small>${f[2]}</small></div><div class="bar" style="background:${COL[f[3]]}"></div>`;
+        $("#flashes").appendChild(el);
+      });
+      // cards
+      INDS.forEach((ind) => {
+        const el = document.createElement("div");
+        el.className = "card";
+        let segs = "";
+        for (let k = 0; k < ind[3]; k++) segs += `<div class="seg" data-on="${k === ind[2] ? 1 : 0}" data-c="${COL[Math.min(k, 3)]}"></div>`;
+        el.innerHTML = `<div class="halo" style="box-shadow: inset 0 0 0 3px ${COL[ind[2]]}, 0 0 40px ${COL[ind[2]]}"></div><div class="cn">${ind[0]}</div><div class="cv" style="color:${COL[ind[2]]}">${ind[1]}</div><div class="segs">${segs}</div>`;
+        $("#cards").appendChild(el);
+      });
+      // heroes
+      HEROES.forEach((h) => {
+        const el = document.createElement("div");
+        el.className = "hero";
+        let lights = "";
+        for (let k = 0; k < h.n; k++) lights += `<div class="light"></div>`;
+        el.innerHTML = `<div class="edge" style="border-color:${COL[h.sig]}; box-shadow: 0 0 90px ${COL[h.sig]}66"></div><div class="cat">${h.cat}</div><div class="nm">${h.nm}</div><div class="vl" style="color:${COL[h.sig]}">${h.pre}0${h.suf}</div><div class="tr">${h.tr}</div><div class="lights">${lights}</div><div class="lab" style="color:${COL[h.sig]}"><div class="dot" style="background:${COL[h.sig]}; box-shadow:0 0 30px ${COL[h.sig]}"></div><span>${h.lab}</span></div>`;
+        $("#heroes").appendChild(el);
+      });
+      // gauge arcs: value 0..3 mapped to 180°..360° around (540,540) r=380
+      (() => {
+        const pt = (v) => {
+          const a = Math.PI + (v / 3) * Math.PI;
+          return [540 + 380 * Math.cos(a), 540 + 380 * Math.sin(a)];
+        };
+        const zones = [0, 0.35, 0.9, 1.7, 3];
+        let html = "";
+        for (let z = 0; z < 4; z++) {
+          const [x1, y1] = pt(zones[z]);
+          const [x2, y2] = pt(zones[z + 1]);
+          html += `<path class="garc" d="M${x1} ${y1} A380 380 0 0 1 ${x2} ${y2}" stroke="${COL[z]}"/>`;
+        }
+        $("#garcs").innerHTML = html;
+        let ticks = "";
+        for (const v of [0.35, 0.9, 1.7]) {
+          const a = Math.PI + (v / 3) * Math.PI;
+          ticks += `<path d="M${540 + 345 * Math.cos(a)} ${540 + 345 * Math.sin(a)} L${540 + 415 * Math.cos(a)} ${540 + 415 * Math.sin(a)}"/>`;
+        }
+        $("#gticks").innerHTML = ticks;
+      })();
+      INDS.forEach((ind) => {
+        const d = document.createElement("i");
+        d.style.background = COL[ind[2]];
+        d.style.boxShadow = `0 0 16px ${COL[ind[2]]}`;
+        $("#dots").appendChild(d);
+      });
+
+      /* ── timeline ── */
+      const tl = gsap.timeline({ paused: true });
+      const flash = (t, a = 0.85) => tl.fromTo("#flash", { opacity: a }, { opacity: 0, duration: 0.35, ease: "power2.out" }, t);
+      const shake = (target, t, amp = 26) =>
+        tl
+          .fromTo(target, { x: amp, y: -amp * 0.6 }, { x: -amp * 0.7, y: amp * 0.5, duration: 0.05, ease: "none" }, t)
+          .to(target, { x: amp * 0.45, y: -amp * 0.3, duration: 0.05, ease: "none" }, t + 0.05)
+          .to(target, { x: -amp * 0.25, y: amp * 0.15, duration: 0.05, ease: "none" }, t + 0.1)
+          .to(target, { x: 0, y: 0, duration: 0.1, ease: "power2.out" }, t + 0.15);
+      const glowTo = (t, rgb, d = 0.5, a = 0.26) => {
+        tl.set("#glow2", { background: `radial-gradient(closest-side, rgba(${rgb},${a}), rgba(${rgb},0) 70%)` }, t);
+        tl.fromTo("#glow2", { opacity: 0 }, { opacity: 1, duration: d, ease: "power2.out" }, t);
+      };
+      const glowOff = (t, d = 0.5) => tl.to("#glow2", { opacity: 0, duration: d, ease: "power2.in" }, t);
+
+      // background drift (whole film)
+      tl.fromTo("#grid", { x: 0, y: 0 }, { x: -90, y: -180, duration: 32, ease: "none" }, 0);
+      tl.fromTo("#glow", { scale: 0.8, y: 200 }, { scale: 1.25, y: -200, duration: 32, ease: "sine.inOut" }, 0);
+      tl.fromTo("#hud", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.1);
+      for (let t = 0.5; t < 31.5; t += 1) tl.fromTo("#hud b", { opacity: 1 }, { opacity: 0.15, duration: 0.5, ease: "steps(1)", immediateRender: false }, t);
+
+      /* S1 · 0–4 */
+      const ecgLen = 4000;
+      tl.set("#ecgp", { strokeDasharray: ecgLen, strokeDashoffset: ecgLen }, 0);
+      tl.to("#ecgp", { strokeDashoffset: 0, duration: 3.6, ease: "power1.inOut" }, 0.1);
+      tl.fromTo("#ecg", { opacity: 0 }, { opacity: 0.55, duration: 0.4 }, 0.1);
+      tl.set(["#h1a", "#h1b", "#g-main", "#g-c", "#g-r"], { opacity: 0 }, 0);
+      tl.fromTo("#h1a", { opacity: 0, scale: 2.6, filter: "blur(24px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.28, ease: "power4.out", transformOrigin: "0% 50%" }, 0.5);
+      tl.fromTo("#h1b", { opacity: 0, scale: 2.6, filter: "blur(24px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.28, ease: "power4.out", transformOrigin: "0% 50%" }, 0.72);
+      shake("#s1i", 0.74, 34);
+      flash(0.5, 0.35);
+      tl.to("#s1a", { scale: 1.05, duration: 1.0, ease: "none", transformOrigin: "50% 40%" }, 0.8);
+      tl.to("#s1a", { opacity: 0, y: -260, scale: 0.7, filter: "blur(18px)", duration: 0.22, ease: "power3.in" }, 1.82);
+      tl.fromTo("#g-main", { opacity: 0, scale: 3, filter: "blur(30px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out", transformOrigin: "30% 50%" }, 2.0);
+      tl.set(["#g-c", "#g-r"], { opacity: 0.85 }, 2.05);
+      const gl = [[-22, 8], [14, -6], [-8, 0], [26, 10], [0, 0], [-16, -8], [10, 4], [0, 0], [-30, 6], [18, -4], [0, 0], [-6, 2]];
+      gl.forEach((g, i) => {
+        tl.set("#g-c", { x: g[0], y: g[1] }, 2.05 + i * 0.07);
+        tl.set("#g-r", { x: -g[0], y: -g[1] }, 2.05 + i * 0.07);
+      });
+      tl.set(["#g-c", "#g-r"], { x: 0, y: 0, opacity: 0 }, 2.05 + gl.length * 0.07);
+      shake("#s1i", 2.02, 40);
+      flash(2.0, 0.5);
+      glowTo(2.0, "62,255,139", 0.3);
+      tl.to("#h2wrap", { scale: 1.08, duration: 1.4, ease: "none", transformOrigin: "40% 50%" }, 2.3);
+      tl.set(["#g-c", "#g-r"], { opacity: 0.85 }, 3.3);
+      [[40, 0], [-30, 10], [60, -12], [-50, 0], [80, 14]].forEach((g, i) => {
+        tl.set("#g-c", { x: g[0], y: g[1] }, 3.3 + i * 0.06);
+        tl.set("#g-r", { x: -g[0], y: -g[1] }, 3.3 + i * 0.06);
+      });
+      tl.to("#s1i", { scale: 5, opacity: 0, filter: "blur(30px)", duration: 0.32, ease: "power3.in", transformOrigin: "40% 48%" }, 3.68);
+      glowOff(3.6, 0.4);
+
+      /* S2 · 4–8 */
+      flash(4.0);
+      document.querySelectorAll(".ticker").forEach((el, r) => {
+        const dir = r % 2 ? 1 : -1;
+        tl.fromTo(el, { x: dir > 0 ? -1900 : 0 }, { x: dir > 0 ? -1100 : -800, duration: 4, ease: "none" }, 4);
+      });
+      const glowRGB = ["62,255,139", "255,188,66", "255,107,53", "255,56,96"];
+      document.querySelectorAll(".flashcard").forEach((el, i) => {
+        const t = 4 + i * 0.5;
+        const from = i % 2 ? 140 : -140;
+        tl.fromTo(el, { opacity: 0, x: from, scale: 1.25, filter: "blur(14px)" }, { opacity: 1, x: 0, scale: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out", transformOrigin: "0% 50%" }, t);
+        tl.fromTo(el.querySelector(".vl"), { scale: 1.5 }, { scale: 1, duration: 0.3, ease: "back.out(2.2)", transformOrigin: "0% 60%" }, t);
+        tl.fromTo(el.querySelector(".bar"), { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, t + 0.04);
+        tl.to(el, { opacity: 0, x: -from * 0.8, scale: 0.9, filter: "blur(10px)", duration: 0.09, ease: "power2.in" }, t + 0.41);
+        glowTo(t, glowRGB[FLASH[i][3]], 0.12);
+        if (i % 2 === 0) shake("#s2i", t, 14);
+      });
+      tl.to("#s2i", { scale: 0.2, opacity: 0, filter: "blur(20px)", duration: 0.1, ease: "power2.in" }, 7.9);
+      glowOff(7.8, 0.2);
+
+      /* S3 · 8–14 */
+      flash(8.0);
+      shake("#s3i", 8.0, 22);
+      tl.fromTo("#s3head", { opacity: 0, y: -80 }, { opacity: 1, y: 0, duration: 0.3, ease: "power4.out" }, 8.0);
+      const cnt = { v: 0 };
+      tl.to(cnt, { v: 18, duration: 2.25, ease: "none", onUpdate: () => ($("#s3num").textContent = Math.round(cnt.v)) }, 8.5);
+      tl.fromTo("#s3num", { scale: 1 }, { scale: 1.18, duration: 0.12, yoyo: true, repeat: 1, ease: "power2.out", transformOrigin: "50% 80%" }, 10.75);
+      document.querySelectorAll(".card").forEach((el, i) => {
+        const t = 8.6 + i * 0.125;
+        tl.fromTo(el, { opacity: 0, y: 120, scale: 0.6, rotation: i % 2 ? 8 : -8 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 0.34, ease: "back.out(1.9)" }, t);
+        el.querySelectorAll(".seg").forEach((sg, k) => {
+          if (sg.dataset.on === "1") tl.to(sg, { backgroundColor: sg.dataset.c, boxShadow: `0 0 18px ${sg.dataset.c}`, duration: 0.2 }, t + 0.3 + k * 0.03);
+        });
+        if (INDS[i][2] > 0) {
+          tl.fromTo(el.querySelector(".halo"), { opacity: 0 }, { opacity: 1, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, 11.5 + (i % 3) * 0.08);
+          tl.fromTo(el, { scale: 1 }, { scale: 1.07, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, 11.5 + (i % 3) * 0.08);
+        }
+      });
+      tl.fromTo("#s3sub", { opacity: 0, y: 90, scale: 1.3 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power4.out" }, 11.0);
+      tl.fromTo("#s3i", { scale: 1 }, { scale: 1.06, duration: 2.6, ease: "sine.inOut", transformOrigin: "50% 50%" }, 11.0);
+      tl.to("#s3i", { scale: 3.2, opacity: 0, filter: "blur(24px)", duration: 0.3, ease: "power3.in", transformOrigin: "50% 40%" }, 13.7);
+
+      /* S4 · 14–20 */
+      flash(14.0);
+      tl.fromTo("#s4title", { opacity: 0, x: -200 }, { opacity: 1, x: 0, duration: 0.35, ease: "power4.out" }, 14.0);
+      document.querySelectorAll(".hero").forEach((el, i) => {
+        const h = HEROES[i];
+        const t = 14 + i * 2;
+        const vl = el.querySelector(".vl");
+        tl.fromTo(el, { opacity: 0, x: 900, rotation: 10, scale: 0.8 }, { opacity: 1, x: 0, rotation: 0, scale: 1, duration: 0.42, ease: "back.out(1.4)" }, t);
+        const o = { v: 0 };
+        tl.to(o, { v: h.v, duration: 0.75, ease: "power3.out", onUpdate: () => (vl.textContent = h.pre + o.v.toFixed(h.dec) + h.suf) }, t + 0.1);
+        el.querySelectorAll(".light").forEach((lt, k) => {
+          const c = COL[Math.min(k, 3)];
+          tl.to(lt, { backgroundColor: c, opacity: k === h.sig ? 1 : 0.22, boxShadow: k === h.sig ? `0 0 40px ${c}` : "none", duration: 0.12 }, t + 0.3 + k * 0.1);
+        });
+        tl.fromTo(el.querySelector(".lab"), { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.25, ease: "power3.out" }, t + 0.75);
+        tl.fromTo(el.querySelector(".edge"), { opacity: 0 }, { opacity: 1, duration: 0.2 }, t + 0.75);
+        tl.fromTo(vl, { scale: 1 }, { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1, ease: "power2.out", transformOrigin: "0% 60%" }, t + 0.75);
+        glowTo(t + 0.75, glowRGB[h.sig], 0.3);
+        if (h.sig >= 2) shake("#s4i", t + 0.75, 10 + h.sig * 6);
+        tl.to(el, { scale: 1.03, duration: 0.95, ease: "none" }, t + 0.85);
+        if (i < 2) tl.to(el, { opacity: 0, x: -900, rotation: -10, scale: 0.8, duration: 0.2, ease: "power3.in" }, t + 1.8);
+      });
+      tl.to("#s4i", { y: -1900, opacity: 0, filter: "blur(16px)", duration: 0.28, ease: "power3.in" }, 19.72);
+      glowOff(19.7, 0.3);
+
+      /* S5 · 20–26 */
+      flash(20.0, 0.6);
+      tl.fromTo("#s5q", { opacity: 0, y: 120, filter: "blur(16px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "power4.out" }, 20.0);
+      document.querySelectorAll(".garc").forEach((a, i) => {
+        tl.fromTo(a, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 20.25 + i * 0.1);
+      });
+      tl.fromTo("#needle", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 20.3);
+      tl.fromTo("#scan5", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 20.4);
+      for (let t = 20.6; t < 22.6; t += 0.3) tl.fromTo("#scan5", { opacity: 1 }, { opacity: 0.35, duration: 0.15, yoyo: true, repeat: 1, ease: "none", immediateRender: false }, t);
+      tl.set("#needle", { svgOrigin: "540 540", rotation: 0 }, 20.0);
+      tl.to("#needle", { rotation: 158, duration: 1.3, ease: "power2.inOut" }, 20.4);
+      tl.to("#needle", { rotation: 60, duration: 0.5, ease: "power2.inOut" }, 21.7);
+      tl.to("#needle", { rotation: 110, duration: 0.4, ease: "power2.inOut" }, 22.2);
+      tl.to("#needle", { rotation: (SCORE / 3) * 180, duration: 0.4, ease: "power4.in" }, 22.6);
+      tl.fromTo("#needle", { scale: 1 }, { scale: 1.06, duration: 0.08, yoyo: true, repeat: 1, svgOrigin: "540 540" }, 23.0);
+      tl.fromTo("#s5i", { scale: 1 }, { scale: 1.07, duration: 2.6, ease: "power1.in", transformOrigin: "50% 45%" }, 20.4);
+      tl.to("#s5i", { scale: 1, duration: 0.12, ease: "power4.out" }, 23.0);
+      // verdict slam
+      flash(23.0, 0.9);
+      shake("#s5i", 23.0, 38);
+      glowTo(23.0, "255,188,66", 0.2, 0.13);
+      tl.to("#scan5", { opacity: 0, duration: 0.05 }, 22.98);
+      tl.to("#s5q", { opacity: 0.35, duration: 0.2 }, 23.0);
+      tl.fromTo("#score", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.out" }, 23.0);
+      tl.fromTo("#verdict", { opacity: 0, scale: 3.2, filter: "blur(30px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.28, ease: "power4.out" }, 23.05);
+      tl.fromTo("#vsub", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 23.5);
+      document.querySelectorAll("#dots i").forEach((d, i) => {
+        tl.fromTo(d, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.18, ease: "back.out(3)" }, 23.6 + i * 0.045);
+      });
+      tl.to("#verdict", { scale: 1.05, duration: 2.3, ease: "none" }, 23.4);
+      tl.to("#s5i", { scale: 0.1, opacity: 0, filter: "blur(20px)", duration: 0.26, ease: "power3.in", transformOrigin: "50% 50%" }, 25.74);
+      glowOff(25.6, 0.35);
+
+      /* S6 · 26–32 */
+      flash(26.0, 1);
+      shake("#s6i", 26.0, 40);
+      glowTo(26.0, "43,228,240", 0.25, 0.12);
+      tl.fromTo("#logo .l1", { opacity: 0, y: -300, scale: 1.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power4.out" }, 26.0);
+      tl.fromTo("#logo .l2", { opacity: 0, y: 300, scale: 1.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power4.out" }, 26.08);
+      tl.fromTo("#logoline", { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.5, ease: "power4.out" }, 26.3);
+      tl.fromTo("#tag", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 26.6);
+      tl.to("#logo", { scale: 1.04, duration: 5.4, ease: "none", transformOrigin: "50% 60%" }, 26.4);
+      document.querySelectorAll(".chip").forEach((c, i) => {
+        tl.fromTo(c, { opacity: 0, scale: 0.3, y: 80, rotation: i === 1 ? 10 : -10 }, { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.3, ease: "back.out(2.4)" }, 27.5 + i * 0.5);
+      });
+      tl.fromTo("#urlbox", { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 0.35, ease: "power4.out" }, 29.5);
+      tl.fromTo("#url", { scale: 1 }, { scale: 1.07, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, 29.9);
+      tl.to(["#s6i", "#fx"], { opacity: 0, duration: 0.35, ease: "power2.in" }, 31.65);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
